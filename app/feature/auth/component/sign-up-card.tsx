@@ -60,7 +60,7 @@ export const SignUpCard = () => {
                             </FormItem>
                         )}
                         />
-                          <FormField control={form.control} name="email" render={({field}) => (
+                        <FormField control={form.control} name="email" render={({ field }) => (
                             <FormItem>
                                 <FormControl>
                                     <Input
@@ -74,7 +74,7 @@ export const SignUpCard = () => {
                             </FormItem>
                         )}
                         />
-                        <FormField control={form.control} name="password"  render={({ field }) => (
+                        <FormField control={form.control} name="password" render={({ field }) => (
                             <FormItem>
                                 <FormControl>
                                     <Input
@@ -90,7 +90,7 @@ export const SignUpCard = () => {
                         />
 
                         <Button className="w-full" variant="primary" disabled={false} >
-                            Submit
+                            Sign Up
                         </Button>
                     </form>
                 </Form>
@@ -116,6 +116,19 @@ export const SignUpCard = () => {
                     <FaGithub className="mr-5 size-10" />
                     Login with GitHub
                 </Button>
+            </CardContent>
+
+            <div className="p-7">
+                <DottedSeperator />
+            </div>
+
+            <CardContent className="px-7 flex items-center justify-center text-center">
+                <p>
+                    Already have an account? {""}
+                    <Link href={"/sign-in"} className="text-blue-700 hover:underline">
+                       Sign In
+                    </Link>
+                </p>
             </CardContent>
 
         </Card>

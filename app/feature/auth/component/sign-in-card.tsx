@@ -7,6 +7,7 @@ import { FaGithub } from "react-icons/fa";
 import { TypeOf, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 const formSchema = z.object({
@@ -40,7 +41,7 @@ export const SignInCard = () => {
             <CardContent className="p-7">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        <FormField control={form.control} name="email" render={({field}) => (
+                        <FormField control={form.control} name="email" render={({ field }) => (
                             <FormItem>
                                 <FormControl>
                                     <Input
@@ -54,7 +55,7 @@ export const SignInCard = () => {
                             </FormItem>
                         )}
                         />
-                        <FormField name="password" control={form.control} render={({field}) => (
+                        <FormField name="password" control={form.control} render={({ field }) => (
                             <FormItem>
                                 <FormControl>
                                     <Input
@@ -97,6 +98,19 @@ export const SignInCard = () => {
                 </Button>
             </CardContent>
 
+            <div className="p-7">
+                <DottedSeperator />
+            </div>
+
+            <CardContent className="px-7 flex items-center justify-center text-center">
+                <p>
+                    Don't have an account? {""}
+                    <Link href={"/sign-in"} className=" text-blue-700 hover:underline">
+                        Sign In
+                    </Link>
+                </p>
+
+            </CardContent>
         </Card>
     );
 };
