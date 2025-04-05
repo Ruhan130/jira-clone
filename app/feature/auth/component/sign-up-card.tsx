@@ -8,30 +8,32 @@ import Link from "next/link";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 
 const formSchema = z.object({
+    name: z.string().trim().min(1, "Minimun 1 character is required"),
     email: z.string().email(),
-    password: z.string()
+    password: z.string().min(1, "Required")
 });
 
 export const SignUpCard = () => {
 
-const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues:{
-        email: "",
-        password: ""
-    }
-})
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+            password: ""
+        }
+    });
 
+    const onSubmit = (values: z.infer<typeof formSchema>) => { console.log({ values }) };
     return (
         <Card className="w-full h-full md:w-[487px] border-none shadow-none">
             <CardHeader className="flex items-center justify-center text-center p-7">
                 <CardTitle className="text-2xl ">
                     Sign Up
-
                 </CardTitle>
                 <CardDescription>
                     <span className="text-sm text-gray-500">
@@ -43,38 +45,55 @@ const form = useForm<z.infer<typeof formSchema>>({
                 <DottedSeperator />
             </div>
             <CardContent className="p-7">
-                <form className="space-y-4">
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <FormField name="name" control={form.control} render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="text"
+                                        placeholder="Enter your Name"
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                          <FormField control={form.control} name="email" render={({field}) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="email"
+                                        placeholder="Enter your Email"
 
-                    <Input required
-                        type="text"
-                        placeholder="Enter Your Name "
-                        value={""}
-                        onChange={() => { }}
-                        disabled={false}
-                    />
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
+                        <FormField control={form.control} name="password"  render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        type="password"
+                                        placeholder="Enter your Password"
 
-                    <Input required
-                        type="email"
-                        placeholder="Enter your Email"
-                        value={""}
-                        onChange={() => { }}
-                        disabled={false}
-                    />
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                        />
 
-                    <Input required
-                        value={""}
-                        placeholder="Enter your Password"
-                        type="password"
-                        onChange={() => { }}
-                        disabled={false}
-                        min={8}
-                        max={255}
-                    />
-
-                    <Button className="w-full" variant="primary" disabled={false} >
-                        Submit
-                    </Button>
-                </form>
+                        <Button className="w-full" variant="primary" disabled={false} >
+                            Submit
+                        </Button>
+                    </form>
+                </Form>
             </CardContent>
             <div className="px-7">
                 <DottedSeperator />
