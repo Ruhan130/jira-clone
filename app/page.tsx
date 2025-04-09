@@ -1,28 +1,29 @@
+"use client"
+import { useRouter } from "next/navigation";
+import { useCurrent } from "./feature/auth/api/use-current";
+import { useEffect } from "react";
+import { useLogout } from "./feature/auth/api/use-logout";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 export default function Home() {
 
+  const router = useRouter();
+  const { data, isLoading } = useCurrent();
+  const { mutate } = useLogout();
+
+  useEffect(() => {
+    if (!data && !isLoading) {
+      router.push("/sign-in");
+    }
+  }, [data]);
+
   return (
-    <div className="flex gap-2 py-2 px-4 ">
-      <Button>
-        primary
+    <div >
+      Only Visible valid data
+      <Button onClick={() => mutate()}>
+        Logout
       </Button>
-      <Button variant='secondary'>
-        secondary
-      </Button>
-      <Button variant='ghost'>
-        ghost
-      </Button>
-      <Button variant='destructive'>
-        destructive
-      </Button>
-      <Button variant='muted'>
-        muted
-      </Button>
-      <Button variant='teritery'>
-      teriterys
-      </Button>
+
     </div>
   );
 }
