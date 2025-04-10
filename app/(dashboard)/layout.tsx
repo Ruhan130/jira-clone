@@ -4,7 +4,7 @@ interface DashboardLayoutProps {
 const Dashboard = ({ children }: DashboardLayoutProps) => {
     return (
         <div>
-            {children}
+            {children}  
         </div>
     )
 }
