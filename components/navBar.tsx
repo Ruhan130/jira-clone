@@ -1,4 +1,5 @@
 import { UserButton } from "@/app/feature/auth/component/user-button"
+import { ModleSidebar } from "./mobile-sidebar"
 
 export const NavBar = () => {
     return (
@@ -11,7 +12,8 @@ export const NavBar = () => {
                     Monitor all your project and tasks here
                 </p>
             </div>
-            <UserButton/>
+            <ModleSidebar />
+            <UserButton />
         </div>
     )
 }
