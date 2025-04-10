@@ -1,3 +1,4 @@
+"use client"
 import { DottedSeperator } from "@/components/dotted-seperater.tsx/dotted-seperater";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
