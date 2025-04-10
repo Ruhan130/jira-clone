@@ -4,6 +4,7 @@ import { useCurrent } from "./feature/auth/api/use-current";
 import { useEffect } from "react";
 import { useLogout } from "./feature/auth/api/use-logout";
 import { Button } from "@/components/ui/button";
+import { UserButton } from "./feature/auth/component/user-button";
 
 export default function Home() {
 
@@ -19,11 +20,8 @@ export default function Home() {
 
   return (
     <div >
-      Only Visible valid data
-      <Button onClick={() => mutate()}>
-        Logout
-      </Button>
-
+    
+    <UserButton/>
     </div>
   );
 }
