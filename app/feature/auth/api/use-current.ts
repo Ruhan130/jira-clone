@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 
-import { client } from "@/lib/rpc";
+import { client } from "@/src/lib/rpc";
 
 export const useCurrent = () => {
     const query = useQuery({
