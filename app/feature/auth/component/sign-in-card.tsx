@@ -105,8 +105,8 @@ export const SignInCard = () => {
             <CardContent className="px-7 flex items-center justify-center text-center">
                 <p>
                     Don't have an account? {""}
-                    <Link href={"/sign-in"} className=" text-blue-700 hover:underline">
-                        Sign In
+                    <Link href={"/sign-up"} className=" text-blue-700 hover:underline">
+                        Sign Up
                     </Link>
                 </p>
 
