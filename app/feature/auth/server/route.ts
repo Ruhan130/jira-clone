@@ -2,11 +2,11 @@ import z from "zod"
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { loginSchema, registerSchema } from "../schemas";
-import { createAdminClient } from "@/src/lib/appwrite";
+import { createAdminClient } from "@/lib/appwrite";
 import { ID } from "node-appwrite";
 import { deleteCookie, setCookie } from "hono/cookie";
 import { AUTH_CONST } from "../constant";
-import { sessionMiddleware } from "@/src/lib/session-middleware";
+import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
     .get(
