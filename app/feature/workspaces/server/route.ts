@@ -20,7 +20,7 @@ const app = new Hono()
             {
                 name,
                 userId: user.$id 
-            }
+            },
         )
     });
 
