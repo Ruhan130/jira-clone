@@ -19,9 +19,12 @@ const app = new Hono()
             ID.unique(),
             {
                 name,
-                userId: user.$id 
+                userId: user.$id
             },
-        )
-    });
+        );
+
+        return c.json({ data: workspaces });
+    }
+    );
 
 export default app;
