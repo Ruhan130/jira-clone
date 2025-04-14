@@ -7,12 +7,12 @@ import { ID } from "node-appwrite";
 
 
 const app = new Hono()
-    .post("/", zValidator("json", createWrokspaceSchemas), sessionMiddleware, async (c) => {
+    .post("/", zValidator("form", createWrokspaceSchemas), sessionMiddleware, async (c) => {
         const databases = c.get("databases");
         const storage = c.get("storage");
         const user = c.get("user");
 
-        const { name, image } = c.req.valid("json");
+        const { name, image } = c.req.valid("form");
 
         let uploadedImageUrl: string | undefined;
 
@@ -21,12 +21,13 @@ const app = new Hono()
                 IMAGE_BUCKET_ID,
                 ID.unique(),
                 image,
+                
             );
             const arryBuffer = await storage.getFilePreview(
                 IMAGE_BUCKET_ID,
                 file.$id
             );
-            uploadedImageUrl = `data:image/path;base64,${Buffer.from(arryBuffer).toString("base64")}`;
+            uploadedImageUrl = `data:image/png;base64,${Buffer.from(arryBuffer).toString("base64")}`;
         }
 
 
