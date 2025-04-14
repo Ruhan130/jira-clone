@@ -23,7 +23,7 @@ const app = new Hono()
                 image,
                 
             );
-            const arryBuffer = await storage.getFilePreview(
+            const arryBuffer = await storage.getFileView(
                 IMAGE_BUCKET_ID,
                 file.$id
             );
@@ -37,9 +37,10 @@ const app = new Hono()
             WORKSPACES_ID,
             ID.unique(),
             {
+                // KEY POINT EXACT SAME NAAM HOGA JO APPWRITE K ATTRIBUTES M HAIN
                 name,
                 userId: user.$id,
-                image: uploadedImageUrl
+                imageUrl: uploadedImageUrl
             },
         );
 

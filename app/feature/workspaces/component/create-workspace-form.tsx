@@ -13,6 +13,7 @@ import { useCreateWorkspace } from "../api/use-create-workspace";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { ImageIcon } from "lucide-react";
+import { toast } from "sonner";
 interface CreateWorkSpaceForm {
     onCalled?: () => void;
 };
@@ -39,6 +40,10 @@ export const CreateWorkSpaceForm = ({ onCalled }: CreateWorkSpaceForm) => {
     const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            if (file.size > 1_000_000) { 
+                toast.error("Image size should be less than 1MB");
+                return;
+            }
             form.setValue("image", file);
         }
     };
@@ -87,7 +92,7 @@ export const CreateWorkSpaceForm = ({ onCalled }: CreateWorkSpaceForm) => {
                                                     {field.value ? (
                                                         <div className="size-[72px] relative rounded-md overflow-hidden">
                                                             <Image
-                                                                alt="logo"
+                                                                alt="Logo"
                                                                 fill
                                                                 className="object-cover"
                                                                 src={
