@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/select";
 import { WorkspaceAvatar } from "@/app/feature/workspaces/component/create-workspace-avatar";
 import { useRouter } from "next/navigation";
+import { UseWorkspaceId } from "@/app/feature/workspaces/hooks/use-workspace-id";
 
 export const WorkspaceSwitcher = () => {
+  const workspaceId = UseWorkspaceId();
   const router = useRouter();
   const { data: workspaces } = useGetWorkpsace();
   const onSelect = (id: string) => {
@@ -27,7 +29,7 @@ export const WorkspaceSwitcher = () => {
         </p>
         <RiAddCircleFill className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition" />
       </div>
-      <Select onValueChange={onSelect}>
+      <Select onValueChange={onSelect} value={workspaceId}>
         <SelectTrigger className="w-full font-medium p-1 bg-neutral-200">
           <SelectValue placeholder="No workspace Selected" />
         </SelectTrigger>
