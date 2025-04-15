@@ -1,5 +1,4 @@
 import { NavBar } from "@/components/navBar";
-import { NavigationBar } from "@/components/navigation-bar";
 import { Sidebar } from "@/components/sidebar";
 
 interface DashboardLayoutProps {

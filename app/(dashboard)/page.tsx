@@ -3,15 +3,15 @@
 import { redirect } from "next/navigation";
 import { getCurrent } from "../feature/auth/actions";
 import { UserButton } from "../feature/auth/component/user-button";
-import { CreateWorkSpaceForm } from "../feature/workspaces/component/create-workspace-form";
+import { getWorkspaces } from "../feature/workspaces/actions";
 
 export default async function Home() {
   const user = await getCurrent();
   if (!user) redirect("/sign-in");
-
-  return (
-    <div className="bg-neutral-500 h-full p-4" >
-      <CreateWorkSpaceForm />
-    </div>
-  );
+  const workspaces = await getWorkspaces();
+  if (workspaces.total === 0) {
+    redirect("/workspaces/")
+  } else {
+    redirect(`/workspaces/${workspaces.documents[0].$id}`);
+  }
 }
