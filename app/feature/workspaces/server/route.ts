@@ -5,6 +5,7 @@ import { sessionMiddleware } from "@/lib/session-middleware";
 import { DATABASE_ID, IMAGE_BUCKET_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
 import { ID, Query } from "node-appwrite";
 import { MemberType } from "../../members/type";
+import { generateInvitationCode } from "@/lib/utils";
 
 
 const app = new Hono()
@@ -68,7 +69,8 @@ const app = new Hono()
                 // KEY POINT EXACT SAME NAAM HOGA JO APPWRITE K ATTRIBUTES M HAIN
                 name,
                 userId: user.$id,
-                imageUrl: uploadedImageUrl
+                imageUrl: uploadedImageUrl,
+                inviteCode: generateInvitationCode(6)
             },
         );
 
