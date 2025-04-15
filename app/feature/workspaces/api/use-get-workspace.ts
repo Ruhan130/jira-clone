@@ -5,7 +5,7 @@ import { client } from "@/lib/rpc";
 
 export const useGetWorkpsace = () => {
     const query = useQuery({
-        queryKey: ["worksapce"],
+        queryKey: ["workspaces"],
         queryFn: async () => {
             const response = await client.api.workspaces.$get();
             if (!response.ok) {

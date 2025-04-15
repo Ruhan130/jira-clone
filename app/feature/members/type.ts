@@ -1,4 +1,4 @@
-export const enum MemberType {
+export enum MemberType {
     ADMIN = "ADMIN",
     MEMBER = "MEMBER"
 };
