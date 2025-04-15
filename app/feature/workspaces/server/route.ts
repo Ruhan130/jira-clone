@@ -7,6 +7,15 @@ import { ID } from "node-appwrite";
 
 
 const app = new Hono()
+    .get("/", sessionMiddleware, async (c) => {
+        const databases = c.get("databases");
+
+        const worksapce = await databases.listDocuments(
+            DATABASE_ID,
+            WORKSPACES_ID,
+        );
+        return c.json({ data: worksapce });
+    })
     .post("/", zValidator("form", createWrokspaceSchemas), sessionMiddleware, async (c) => {
         const databases = c.get("databases");
         const storage = c.get("storage");
@@ -21,7 +30,7 @@ const app = new Hono()
                 IMAGE_BUCKET_ID,
                 ID.unique(),
                 image,
-                
+
             );
             const arryBuffer = await storage.getFileView(
                 IMAGE_BUCKET_ID,
