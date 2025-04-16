@@ -14,11 +14,13 @@ import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ImageIcon } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 interface CreateWorkSpaceForm {
-    onCalled?: () => void;
+    onCancel?: () => void;
 };
 
-export const CreateWorkSpaceForm = ({ onCalled }: CreateWorkSpaceForm) => {
+export const CreateWorkSpaceForm = ({ onCancel }: CreateWorkSpaceForm) => {
+    const router = useRouter();
     const { mutate, isPending } = useCreateWorkspace();
     const form = useForm<z.infer<typeof createWrokspaceSchemas>>({
         resolver: zodResolver(createWrokspaceSchemas),
@@ -34,13 +36,19 @@ export const CreateWorkSpaceForm = ({ onCalled }: CreateWorkSpaceForm) => {
             ...values,
             image: values.image instanceof File ? values.image : "",
         }
-        mutate({ form: finalSubmit });
+        mutate({ form: finalSubmit }, {
+            onSuccess: ({ data }) => {
+                form.reset();
+                // onCancel?.();
+                router.push(`/workspaces/${data.$id}`);
+            }
+        });
     };
 
     const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            if (file.size > 1_000_000) { 
+            if (file.size > 1_000_000) {
                 toast.error("Image size should be less than 1MB");
                 return;
             }
@@ -137,7 +145,7 @@ export const CreateWorkSpaceForm = ({ onCalled }: CreateWorkSpaceForm) => {
                             </div>
                             <DottedSeperator className="py-7" />
                             <div className="flex items-center justify-between pt-10">
-                                <Button type="button" variant="secondary" size="lg" onClick={onCalled}>
+                                <Button type="button" variant="secondary" size="lg" onClick={onCancel}>
                                     Cancel
                                 </Button>
                                 <Button type="submit" variant="primary" size="lg"   >

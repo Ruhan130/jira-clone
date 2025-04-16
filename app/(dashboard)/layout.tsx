@@ -1,6 +1,6 @@
 import { NavBar } from "@/components/navBar";
-import { NavigationBar } from "@/components/navigation-bar";
 import { Sidebar } from "@/components/sidebar";
+import { CreateResponsiveModal } from "../feature/workspaces/component/create-responsive-model";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -9,6 +9,7 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     return (
         <div className="min-h-screen">
+            <CreateResponsiveModal />
             <div className="flex w-full h-full">
                 <div className="fixed left-0 top-0 hidden lg:block lg:w-[264px] h-full overflow-y-auto">
                     <Sidebar />
