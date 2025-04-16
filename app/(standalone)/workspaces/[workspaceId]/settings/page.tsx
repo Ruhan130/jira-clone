@@ -1,4 +1,6 @@
 import { getCurrent } from "@/app/feature/auth/actions";
+import { getWorkspace } from "@/app/feature/workspaces/actions";
+import { EditWorkSpaceForm } from "@/app/feature/workspaces/component/edit-workspace-form";
 
 import { redirect } from "next/navigation";
 
@@ -12,10 +14,13 @@ const WorkspaceSettingPage = async ({ params }: WorkspaceSettingPageProps) => {
 
     const user = await getCurrent();
     if (!user) redirect("/sign-in");
-
+    const initialValues = await getWorkspace({ workspaceId: params.workspaceId });
+    if (!initialValues) {
+        redirect(`/workspaces/${params.workspaceId}`)
+    }
     return (
-        <div>
-            DATABASE UPDATE PAGE : {params.workspaceId}
+        <div className="w-full lg:max-w-xl">
+            <EditWorkSpaceForm initialValues={initialValues} />
         </div>
     )
 }

@@ -12,12 +12,13 @@ import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "../api/use-create-workspace";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ImageIcon } from "lucide-react";
+import { ArrowLeftIcon, ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Workspace } from "../type";
+import { useUpdateWorkspace } from "../api/use-update-workspace";
 interface EditWorkSpaceForm {
     onCancel?: () => void;
     initialValues: Workspace;
@@ -25,7 +26,7 @@ interface EditWorkSpaceForm {
 
 export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm) => {
     const router = useRouter();
-    const { mutate, isPending } = useCreateWorkspace();
+    const { mutate, isPending } = useUpdateWorkspace();
     const form = useForm<z.infer<typeof updateWorkSpaceSchema>>({
         resolver: zodResolver(updateWorkSpaceSchema),
         defaultValues: {
@@ -39,7 +40,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
     const onsubmit = (values: z.infer<typeof updateWorkSpaceSchema>) => {
         const finalSubmit = {
             ...values,
-            image: values.image instanceof File ? values.image : undefined,
+            image: values.image instanceof File ? values.image : "",
         }
         mutate({
             form: finalSubmit,
@@ -67,7 +68,11 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
     return (
         <div>
             <Card className="w-full h-full  border-none shadow-none">
-                <CardHeader className=" flex p-7">
+                <CardHeader className=" flex flex-row items-center gap-x-4 space-y-0 p-7">
+                    <Button size="sm" variant="secondary" onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.$id}`)}>
+                        <ArrowLeftIcon className="size-4 mr-2" />
+                        Back
+                    </Button>
                     <CardTitle className="text-xl font-bold">
                         {initialValues.name}
                     </CardTitle>
@@ -135,14 +140,33 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
                                                             disabled={isPending}
 
                                                         />
-                                                        <Button className="w-fit mt-2"
-                                                            type="button"
-                                                            disabled={isPending}
-                                                            variant="teritery"
-                                                            size="xs"
-                                                            onClick={() => inputRef.current?.click()}>
-                                                            Upload Image
-                                                        </Button>
+                                                        {field.value ?
+                                                            (
+                                                                <Button className="w-fit mt-2"
+                                                                    type="button"
+                                                                    disabled={isPending}
+                                                                    variant="destructive"
+                                                                    size="xs"
+                                                                    onClick={
+                                                                        () => {
+                                                                            field.onChange(null);
+                                                                            if (inputRef.current) {
+                                                                                inputRef.current.value = "";
+                                                                            }
+                                                                        }}>
+                                                                    Remove Image
+                                                                </Button>
+                                                            ) : (
+                                                                <Button className="w-fit mt-2"
+                                                                    type="button"
+                                                                    disabled={isPending}
+                                                                    variant="teritery"
+                                                                    size="xs"
+                                                                    onClick={() => inputRef.current?.click()}>
+                                                                    Upload Image
+                                                                </Button>
+                                                            )
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -157,7 +181,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
                                     Cancel
                                 </Button>
                                 <Button type="submit" variant="primary" size="lg"   >
-                                    Create Workspace
+                                    Update Workspace
                                 </Button>
                             </div>
                         </form>

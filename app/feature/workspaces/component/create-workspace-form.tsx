@@ -129,14 +129,33 @@ export const CreateWorkSpaceForm = ({ onCancel }: CreateWorkSpaceForm) => {
                                                             disabled={isPending}
 
                                                         />
-                                                        <Button className="w-fit mt-2"
-                                                            type="button"
-                                                            disabled={isPending}
-                                                            variant="teritery"
-                                                            size="xs"
-                                                            onClick={() => inputRef.current?.click()}>
-                                                            Upload Image
-                                                        </Button>
+                                                        {field.value ?
+                                                            (
+                                                                <Button className="w-fit mt-2"
+                                                                    type="button"
+                                                                    disabled={isPending}
+                                                                    variant="destructive"
+                                                                    size="xs"
+                                                                    onClick={
+                                                                        () => {
+                                                                            field.onChange(null);
+                                                                            if (inputRef.current) {
+                                                                                inputRef.current.value = "";
+                                                                            }
+                                                                        }}>
+                                                                    Remove Image
+                                                                </Button>
+                                                            ) : (
+                                                                <Button className="w-fit mt-2"
+                                                                    type="button"
+                                                                    disabled={isPending}
+                                                                    variant="teritery"
+                                                                    size="xs"
+                                                                    onClick={() => inputRef.current?.click()}>
+                                                                    Upload Image
+                                                                </Button>
+                                                            )
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
