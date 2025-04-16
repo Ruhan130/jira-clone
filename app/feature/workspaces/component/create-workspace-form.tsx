@@ -15,6 +15,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+
+import { cn } from "@/lib/utils";
 interface CreateWorkSpaceForm {
     onCancel?: () => void;
 };
@@ -145,7 +147,7 @@ export const CreateWorkSpaceForm = ({ onCancel }: CreateWorkSpaceForm) => {
                             </div>
                             <DottedSeperator className="py-7" />
                             <div className="flex items-center justify-between pt-10">
-                                <Button type="button" variant="secondary" size="lg" onClick={onCancel}>
+                                <Button type="button" variant="secondary" size="lg" onClick={onCancel} className={cn(!onCancel && "invisible")}>
                                     Cancel
                                 </Button>
                                 <Button type="submit" variant="primary" size="lg"   >
