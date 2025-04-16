@@ -18,5 +18,5 @@ export const getMember = async ({ databases, workspaceId, userId }: GetMemberPro
         ]
 
     );
-
+    return members.documents[0];
 };

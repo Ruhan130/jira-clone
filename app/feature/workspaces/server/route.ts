@@ -1,11 +1,13 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { createWrokspaceSchemas } from "../schemas";
+import { createWrokspaceSchemas, updateWorkSpaceSchema } from "../schemas";
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { DATABASE_ID, IMAGE_BUCKET_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
 import { ID, Query } from "node-appwrite";
 import { MemberType } from "../../members/type";
 import { generateInvitationCode } from "@/lib/utils";
+import { getMember } from "../../members/utils";
+import { error } from "console";
 
 
 const app = new Hono()
@@ -86,7 +88,61 @@ const app = new Hono()
         )
 
         return c.json({ data: workspaces });
-    }
+    })
+    .patch(
+        "/:workspaceId",
+        sessionMiddleware,
+        zValidator("form", updateWorkSpaceSchema),
+        async (c) => {
+
+            const databases = c.get("databases");
+            const storage = c.get("storage");
+            const user = c.get("user");
+
+            const { workspaceId } = c.req.param();
+
+            const { name, image } = c.req.valid("form");
+
+            const memeber = await getMember({
+                databases,
+                workspaceId,
+                userId: user.$id,
+            });
+
+            if (!memeber || memeber.role !== MemberType.ADMIN) {
+                return c.json({ error: "Unuthoirzed" }, 401);
+            }
+
+            let uploadedImageUrl: string | undefined;
+
+            if (image instanceof File) {
+                const file = await storage.createFile(
+                    IMAGE_BUCKET_ID,
+                    ID.unique(),
+                    image,
+
+                );
+                const arryBuffer = await storage.getFileView(
+                    IMAGE_BUCKET_ID,
+                    file.$id
+                );
+                uploadedImageUrl = `data:image/png;base64,${Buffer.from(arryBuffer).toString("base64")}`;
+            } else {
+                uploadedImageUrl = image;
+            }
+
+
+            const workspace = await databases.updateDocument(
+                DATABASE_ID,
+                WORKSPACES_ID,
+                workspaceId,
+                {
+                    name,
+                    imageUrl: uploadedImageUrl
+                }
+            );
+            return c.json({ data: workspace })
+        }
     );
 
 export default app;
