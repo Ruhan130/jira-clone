@@ -1,4 +1,4 @@
-import { getCurrent } from "@/app/feature/auth/actions";
+import { getCurrent } from "@/app/feature/auth/queries";
 import { CreateWorkSpaceForm } from "@/app/feature/workspaces/component/create-workspace-form";
 import { redirect } from "next/navigation";
 
