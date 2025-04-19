@@ -19,12 +19,25 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Workspace } from "../type";
 import { useUpdateWorkspace } from "../api/use-update-workspace";
+import { useConform } from "@/hooks/use-confirm";
+import { useDeleteWorkspace } from "../api/use-delete-workspace";
 interface EditWorkSpaceForm {
     onCancel?: () => void;
     initialValues: Workspace;
 }
 
 export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm) => {
+    const [DeleteDailogue, confirmDelete] = useConform(
+        "Delete workspace",
+        "This action cannot be done",
+        "destructive",
+    );
+
+    const {
+        mutate: deleteWorkspace,
+        isPending: isDeletingWorkspace
+    } = useDeleteWorkspace();
+
     const router = useRouter();
     const { mutate, isPending } = useUpdateWorkspace();
     const form = useForm<z.infer<typeof updateWorkSpaceSchema>>({
@@ -34,6 +47,23 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
             image: initialValues.imageUrl ?? "",
         }
     });
+
+    const handleDelete = async () => {
+        const ok = await confirmDelete();
+        if (!ok) return;
+
+        deleteWorkspace({
+            param: {
+                workspaceId: initialValues.$id,
+            }
+        }, {
+            onSuccess: () => {
+                window.location.href = "/";
+            }
+        }
+        )
+
+    }
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +96,8 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
     };
 
     return (
-        <div>
+        <div className="flex flex-col gap-y-4">
+            <DeleteDailogue />
             <Card className="w-full h-full  border-none shadow-none">
                 <CardHeader className=" flex flex-row items-center gap-x-4 space-y-0 p-7">
                     <Button size="sm" variant="secondary" onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.$id}`)}>
@@ -186,6 +217,22 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
                             </div>
                         </form>
                     </Form>
+                </CardContent>
+            </Card>
+
+            <Card className="w-full h-full  border-none shadow-none">
+                <CardContent className="p-7">
+                    <div className="flex flex-col">
+                        <h3 className="font-bold">
+                            Danger Zone
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                            Deleting a workspace is iireversible and will remove all associate
+                        </p>
+                        <Button variant="destructive" size="sm" className="mt-6 w-fit ml-auto" onClick={handleDelete} disabled={isDeletingWorkspace}>
+                            Delete Workspace
+                        </Button>
+                    </div>
                 </CardContent>
             </Card>
         </div>
