@@ -167,6 +167,32 @@ const app = new Hono()
         );
         return c.json({ data: { $id: workspaceId } });
     }
+    ).post("/:workspaceId/rest-invite-code", sessionMiddleware, async (c) => {
+        const databases = c.get("databases");
+        const user = c.get("user");
+
+        const { workspaceId } = c.req.param();
+
+        const member = await getMember({
+            databases,
+            workspaceId,
+            userId: user.$id
+        });
+
+        if (!member || member.role !== MemberType.ADMIN) {
+            return c.json({ error: "Unotorized" }, 401);
+        }
+
+        const workspace = await databases.updateDocument(
+            DATABASE_ID,
+            WORKSPACES_ID,
+            workspaceId,
+            {
+                inviteCode: generateInvitationCode(6),
+            }
+        );
+        return c.json({ data: { $id: workspace } });
+    }
     );
 
 export default app;
