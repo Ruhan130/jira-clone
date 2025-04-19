@@ -71,7 +71,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
         }, {
             onSuccess: () => {
                 window.location.href = "/";
-            }
+            } 
         }
         )
 
