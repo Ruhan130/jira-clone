@@ -37,10 +37,36 @@ export const getWorkspaces = async () => {
     }
 }
 
-interface GetWorkspaceProps {
-    workspaceId : string 
-};
 
+interface GetWorkspaceProps {
+    workspaceId: string
+}
+export const getWorkspace = async ({ workspaceId }: GetWorkspaceProps) => {
+    try {
+        const { databases, account } = await createSessionClient();
+        const user = await account.get();
+
+        const member = await getMember({
+            databases,
+            userId: user.$id,
+            workspaceId
+        });
+
+        if (!member) {
+            return null;
+        }
+
+        const workspace = await databases.getDocument<Workspace>(
+            DATABASE_ID,
+            WORKSPACES_ID,
+            workspaceId
+        );
+
+        return workspace;
+    } catch {
+        return null;
+    }
+}
 
 
 
