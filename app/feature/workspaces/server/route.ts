@@ -149,7 +149,7 @@ const app = new Hono()
     .delete("/:workspaceId", sessionMiddleware, async (c) => {
         const databases = c.get("databases");
         const user = c.get("user");
-
+ 
         const { workspaceId } = c.req.param();
 
         const member = await getMember({
@@ -204,8 +204,8 @@ const app = new Hono()
             const { workspaceId } = c.req.param();
             const { code } = c.req.valid("json");
 
-            const user = c.get("user");
             const databases = c.get("databases");
+            const user = c.get("user");
 
             const member = await getMember({
                 databases,
@@ -214,7 +214,7 @@ const app = new Hono()
             })
 
             if (member) {
-                return c.json({ error: "Already a member" }, 400)
+                return c.json({ error: "Already a member" }, 400);
             }
 
             const workspace = await databases.getDocument<Workspace>(
@@ -224,16 +224,16 @@ const app = new Hono()
             );
 
             if (workspace.inviteCode !== code) {
-                return c.json({ error: "Invalid invite code" }, 400)
+                return c.json({ error: "Invalid invite code" }, 400);
             };
 
             await databases.createDocument(
                 DATABASE_ID,
-                WORKSPACES_ID,
+                MEMBERS_ID,
                 ID.unique(),
                 {
                     workspaceId,
-                    userId: user.$id,   
+                    userId: user.$id,
                     role: MemberType.MEMBER
                 }
             );
