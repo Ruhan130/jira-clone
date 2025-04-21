@@ -71,7 +71,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
         }, {
             onSuccess: () => {
                 window.location.href = "/";
-            }
+            } 
         }
         )
 
@@ -125,7 +125,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
         }
     };
 
-    const iniviteFullLink = `${window.location.origin}/worksapces/${initialValues.$id}/join/${initialValues.inviteCode}`;
+    const iniviteFullLink = `${window.location.origin}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`;
 
     const handleInviteLink = () => {
         navigator.clipboard.writeText(iniviteFullLink).then(() => toast.success("Invite Link copied to the clipborad"));
