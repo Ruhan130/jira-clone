@@ -7,7 +7,7 @@ import { toast } from "sonner";
 type ResponseType = InferResponseType<typeof client.api.workspaces[":workspaceId"]["join"]["$post"], 200>;
 type RequestType = InferRequestType<typeof client.api.workspaces[":workspaceId"]["join"]["$post"]>;
 
-export const useResetWorkspace = () => {
+export const useJoinWorkspace = () => {
 
     const queryClient = useQueryClient();
     const mutation = useMutation<ResponseType, Error, RequestType>(
@@ -20,7 +20,7 @@ export const useResetWorkspace = () => {
                 return await response.json();
             },
             onSuccess: ({ data }) => {
-                toast.success("Inivite code reset");
+                toast.success("Joined workspace");
                 queryClient.invalidateQueries({ queryKey: ["workspace"] });
                 queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });
             },

@@ -233,7 +233,7 @@ const app = new Hono()
                 ID.unique(),
                 {
                     workspaceId,
-                    userId: user.$id,
+                    userId: user.$id,   
                     role: MemberType.MEMBER
                 }
             );
