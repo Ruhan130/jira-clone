@@ -1,6 +1,4 @@
-import { cookies } from "next/headers";
 import { Account, Client, Databases, Query } from "node-appwrite"
-import { AUTH_CONST } from "../auth/constant";
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
 import { getMember } from "../members/utils";
 import { Workspace } from "./type";
@@ -39,33 +37,35 @@ export const getWorkspaces = async () => {
     }
 }
 
-
 interface GetWorkspaceProps {
+    workspaceId : string 
+};
+
+
+
+
+
+
+
+interface GetWorkspaceInfo {
     workspaceId: string
 }
-export const getWorkspace = async ({ workspaceId }: GetWorkspaceProps) => {
+export const getWorkspaceInfo = async ({ workspaceId }: GetWorkspaceInfo) => {
     try {
-        const { databases, account } = await createSessionClient();
-        const user = await account.get();
-
-        const member = await getMember({
-            databases,
-            userId: user.$id,
-            workspaceId
-        });
-
-        if (!member) {
-            return null;
-        }
-
+        const { databases } = await createSessionClient();
         const workspace = await databases.getDocument<Workspace>(
             DATABASE_ID,
             WORKSPACES_ID,
             workspaceId
         );
-
-        return workspace;
+        return {
+            name: workspace.name
+        };
     } catch {
         return null;
     }
 }
+
+
+
+
