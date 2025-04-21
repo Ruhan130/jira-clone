@@ -8,7 +8,7 @@ const app = new Hono().basePath("/api");
 
 const routes = app
     .route("/auth", auth)
-    .route("/member", members)
+    .route("/members", members)
     .route("/workspaces", workspaces);
 
 
