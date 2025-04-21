@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 const WorkspaceIdMembersPage = () => {
     const user = getCurrent();
     if (!user) redirect("/sign-in");
+
     return (
         <div className="w-full lg:max-w-xl">
             <MemberList />
