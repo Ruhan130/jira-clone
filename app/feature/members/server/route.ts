@@ -8,9 +8,8 @@ import { Hono } from "hono"
 import { getMember } from "../utils"
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config"
 import { Query } from "node-appwrite"
-import { json } from "stream/consumers"
+// import { json } from "stream/consumers"
 import { MemberType } from "../type"
-
 const app = new Hono()
     .get("/",
         sessionMiddleware,
@@ -34,13 +33,13 @@ const app = new Hono()
 
             const memebers = await databases.listDocuments(
                 DATABASE_ID,
-                WORKSPACES_ID,
+                MEMBERS_ID,
                 [Query.equal("workspaceId", workspaceId)]
             );
 
             const popullatedMembers = await Promise.all(
                 memebers.documents.map(async (member) => {
-                    const user = await users.get(member.$id);
+                    const user = await users.get(member.userId);
 
                     return {
                         ...member,
@@ -64,9 +63,9 @@ const app = new Hono()
         "/:memberId",
         sessionMiddleware,
         async (c) => {
-            const memberId = c.req.param("memberId");
-            const databases = c.get("databases");
+            const { memberId } = c.req.param();
             const user = c.get("user");
+            const databases = c.get("databases");
 
             const memberToDelte = await databases.getDocument(
                 DATABASE_ID,
@@ -77,13 +76,13 @@ const app = new Hono()
             const allMembersInfoWorkspace = await databases.listDocuments(
                 DATABASE_ID,
                 MEMBERS_ID,
-                [Query.equal("workspaceId", memberToDelte.$id)]
+                [Query.equal("workspaceId", memberToDelte.workspaceId)]
             );
 
             const member = await getMember(
                 {
                     databases,
-                    workspaceId: memberToDelte.$id,
+                    workspaceId: memberToDelte.workspaceId,
                     userId: user.$id
                 }
             );
@@ -96,7 +95,7 @@ const app = new Hono()
             }
 
             if (allMembersInfoWorkspace.total === 1) {
-                return c.json({ error: "Unauthorized" }, 400);
+                return c.json({ error: "Cannot delete the only member" }, 400);
             }
 
             await databases.deleteDocument(
@@ -130,13 +129,13 @@ const app = new Hono()
             const allMembersInfoWorkspace = await databases.listDocuments(
                 DATABASE_ID,
                 MEMBERS_ID,
-                [Query.equal("workspaceId", memberToUpdate.$id)]
+                [Query.equal("workspaceId", memberToUpdate.workspaceId)]
             );
 
             const member = await getMember(
                 {
                     databases,
-                    workspaceId: memberToUpdate.$id,
+                    workspaceId: memberToUpdate.workspaceId,
                     userId: user.$id
                 }
             );
@@ -149,7 +148,7 @@ const app = new Hono()
             }
 
             if (allMembersInfoWorkspace.total === 1) {
-                return c.json({ error: "Unauthorized" }, 400);
+                return c.json({ error: "Can not downgrade the only member" }, 400);
             }
 
             await databases.updateDocument(

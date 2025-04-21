@@ -1,11 +1,13 @@
 "use client"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UseWorkspaceId } from "../hooks/use-workspace-id"
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { DottedSeperator } from "@/components/dotted-seperater.tsx/dotted-seperater";
 import { useGetMember } from "@/app/feature/members/api/use-get-members";
+import { Fragment } from "react";
+import { MemberAvatar } from "../../members/component/member-avatar";
 
 const MemberList = () => {
     const workspaceId = UseWorkspaceId();
@@ -26,6 +28,19 @@ const MemberList = () => {
             <div className="px-7">
                 <DottedSeperator />
             </div>
+            <CardContent className="p-7">
+                {data?.documents.map((member, index) => (
+                    <Fragment key={member.$id}>
+                        <div className="flex items-center gap-2">
+                            <MemberAvatar   
+                            className="size-10"
+                            name={member.name}
+                            FallbackClassName="text-lg"
+                            />
+                        </div>
+                    </Fragment>
+                ))}
+            </CardContent>
         </Card>
     );
 }
