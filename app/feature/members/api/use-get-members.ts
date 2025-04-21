@@ -7,7 +7,7 @@ interface GetMembersProp {
     workspaceId: string;
 }
 
-export const useGetWorkpsace = ({ workspaceId }: GetMembersProp) => {
+export const useGetMember = ({ workspaceId }: GetMembersProp) => {
     const query = useQuery({
         queryKey: ["members"],
         queryFn: async () => {
