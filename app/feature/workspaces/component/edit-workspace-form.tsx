@@ -28,6 +28,7 @@ interface EditWorkSpaceForm {
 }
 
 export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm) => {
+
     const [DeleteDailogue, confirmDelete] = useConform(
         "Delete workspace",
         "This action cannot be done",
@@ -71,7 +72,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
         }, {
             onSuccess: () => {
                 window.location.href = "/";
-            } 
+            }
         }
         )
 
@@ -86,7 +87,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
                 workspaceId: initialValues.$id,
             }
         }, {
-            onSuccess: ()=> {
+            onSuccess: () => {
                 router.refresh();
             }
         }
@@ -245,7 +246,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
                             </div>
                             <DottedSeperator className="py-7" />
                             <div className="flex items-center justify-between pt-10">
-                                <Button type="button" variant="secondary" size="lg" onClick={onCancel} className={cn(!onCancel && "invisible")}>
+                                <Button type="button" variant="secondary" size="lg" onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.$id}`)} className={cn(!onCancel && "invisible")}>
                                     Cancel
                                 </Button>
                                 <Button type="submit" variant="primary" size="lg"   >

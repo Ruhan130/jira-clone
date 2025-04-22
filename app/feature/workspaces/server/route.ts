@@ -115,24 +115,26 @@ const app = new Hono()
                 return c.json({ error: "Unuthoirzed" }, 401);
             }
 
-            let uploadedImageUrl: string | undefined;
+            let uploadedImageUrl: string | null = null;
 
             if (image instanceof File) {
                 const file = await storage.createFile(
                     IMAGE_BUCKET_ID,
                     ID.unique(),
                     image,
-
                 );
                 const arryBuffer = await storage.getFileView(
                     IMAGE_BUCKET_ID,
                     file.$id
                 );
                 uploadedImageUrl = `data:image/png;base64,${Buffer.from(arryBuffer).toString("base64")}`;
-            } else {
+            } else if (typeof image === "string" && image.trim() !== "") {
+                // Keep existing image
                 uploadedImageUrl = image;
+            } else if (image === null || image === undefined || image === "") {
+                // 👇 Explicitly remove the image
+                uploadedImageUrl = null;
             }
-
 
             const workspace = await databases.updateDocument(
                 DATABASE_ID,
@@ -149,7 +151,7 @@ const app = new Hono()
     .delete("/:workspaceId", sessionMiddleware, async (c) => {
         const databases = c.get("databases");
         const user = c.get("user");
- 
+
         const { workspaceId } = c.req.param();
 
         const member = await getMember({
