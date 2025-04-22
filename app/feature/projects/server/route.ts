@@ -28,7 +28,7 @@ const hono = new Hono()
                 return c.json({ error: "Unauthorized" }, 401);
             }
 
-            const project = await databases.listDocuments(
+            const projects = await databases.listDocuments(
                 DATABASE_ID,
                 PROJECTS_ID,
                 [
@@ -36,7 +36,7 @@ const hono = new Hono()
                     Query.orderDesc("$createdAt")
                 ]
             );
-            return c.json({ data: project });
+            return c.json({ data: projects });
         }
 
 
