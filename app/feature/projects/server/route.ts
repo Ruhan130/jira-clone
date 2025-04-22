@@ -6,7 +6,7 @@ import { getMember } from "../../members/utils";
 import { DATABASE_ID, PROJECTS_ID } from "@/config";
 import { Query } from "node-appwrite";
 
-const hono = new Hono()
+const app = new Hono()
     .get(
         "/",
         sessionMiddleware,
@@ -17,6 +17,10 @@ const hono = new Hono()
 
             const { workspaceId } = c.req.valid("query");
 
+            if (!workspaceId) {
+                return c.json({ error: "Missing workspaceId" }, 400);
+            }
+
 
             const member = await getMember({
                 databases,
@@ -25,7 +29,7 @@ const hono = new Hono()
             });
 
             if (!member) {
-                return c.json({ error: "Unauthorized" }, 401);
+                return c.json({ error: "Unauthorized" }, 400);
             }
 
             const projects = await databases.listDocuments(
@@ -41,3 +45,5 @@ const hono = new Hono()
 
 
     )
+
+export default app 
