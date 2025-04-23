@@ -1,5 +1,7 @@
 "use client"
+import { useCreateProject } from "@/app/feature/projects/api/use-create-project";
 import { useGetProjects } from "@/app/feature/projects/api/use-get-projects";
+import { UseCreateProjectModal } from "@/app/feature/projects/hooks/use-create-project-modal";
 import { useGetWorkpsace } from "@/app/feature/workspaces/api/use-get-workspace";
 import { UseWorkspaceId } from "@/app/feature/workspaces/hooks/use-workspace-id";
 import { cn } from "@/lib/utils";
@@ -10,6 +12,7 @@ import { RiAddCircleFill } from "react-icons/ri";
 const Projects = () => {
     const projectId = null;
     const pathname = usePathname();
+    const { open } = UseCreateProjectModal();
     const workspaceId = UseWorkspaceId();
     const { data } = useGetProjects({ workspaceId });
 
@@ -19,11 +22,11 @@ const Projects = () => {
                 <p className="text-xs uppercase text-neutral-500">
                     Projects
                 </p>
-                <RiAddCircleFill onClick={() => { }} className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition" />
+                <RiAddCircleFill onClick={open} className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition" />
             </div>
             {
                 data?.documents.map((project) => {
-                    const href = `/workpsaces/${workspaceId}/projects/${projectId}`;
+                    const href = `/workspaces/${workspaceId}/projects/${projectId}`;
                     const isActive = pathname === href;
                     return (
                         <Link href={href} key={project.$id}>

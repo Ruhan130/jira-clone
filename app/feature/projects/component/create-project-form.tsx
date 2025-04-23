@@ -13,10 +13,10 @@ import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ImageIcon } from "lucide-react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { createProjectSchema } from "../schema";
+import { createProjectFormSchema, createProjectSchema } from "../schemas";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 interface CreateProjectForm {
     onCancel?: () => void;
@@ -26,29 +26,31 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectForm) => {
     const workspaceId = UseWorkspaceId();
     // const router = useRouter();
     const { mutate, isPending } = useCreateProject();
-    const form = useForm<z.infer<typeof createProjectSchema>>({
-        resolver: zodResolver(createProjectSchema),
+   
+    const form = useForm<z.infer<typeof createProjectFormSchema>>({
+        resolver: zodResolver(createProjectFormSchema),
         defaultValues: {
             name: "",
         }
     });
+    
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const onsubmit = (values: z.infer<typeof createProjectSchema>) => {
+    const onsubmit = (values: z.infer<typeof createProjectFormSchema>) => {
         const finalSubmit = {
             ...values,
-            workspaceId,
+            workspaceId, // manually add workspaceId here
             image: values.image instanceof File ? values.image : "",
         }
+    
         mutate({ form: finalSubmit }, {
             onSuccess: () => {
                 form.reset();
-                // onCancel?.();
-                // router.push(`/workspaces/${data.$id}`);
             }
         });
     };
+    
 
     const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

@@ -2,7 +2,7 @@
 
 import { ResponsiveModal } from "@/components/responsive-modal"
 import { CreateProjectForm } from "./create-project-form"
-import { UseCreateProjectModal } from "../api/hooks/use-create-project-modal";
+import { UseCreateProjectModal } from "../hooks/use-create-project-modal";
 
 
 export const CreateProjectModal = () => {

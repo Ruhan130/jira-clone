@@ -13,7 +13,7 @@ export const useCreateProject = () => {
     const mutation = useMutation<ResponseType, Error, RequestType>(
         {
             mutationFn: async ({ form }) => {
-                const response = await client.api.workspaces["$post"]({ form });
+                const response = await client.api.projects["$post"]({ form });
                 if (!response.ok) {
                     throw new Error("Failed to create Project");
                 }
