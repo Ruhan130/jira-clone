@@ -14,10 +14,7 @@ const WorkspaceSettingPage = async ({ params }: WorkspaceSettingPageProps) => {
 
     const user = await getCurrent();
     if (!user) redirect("/sign-in");
-    const initialValues = await getWorkspace({ workspaceId: params.workspaceId });
-    if (!initialValues) {
-        redirect(`/workspaces/${params.workspaceId}`)
-    }
+    const initialValues = await getWorkspace({ workspaceId: params.workspaceId }); 
     return (
         <div className="w-full lg:max-w-xl">
             <EditWorkSpaceForm initialValues={initialValues} />

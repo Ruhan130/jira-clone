@@ -171,7 +171,8 @@ const app = new Hono()
         );
         return c.json({ data: { $id: workspaceId } });
     }
-    ).post("/:workspaceId/rest-invite-code", sessionMiddleware, async (c) => {
+    )
+    .post("/:workspaceId/rest-invite-code", sessionMiddleware, async (c) => {
         const databases = c.get("databases");
         const user = c.get("user");
 
