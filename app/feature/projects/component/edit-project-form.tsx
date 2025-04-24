@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { Project } from "../types";
 import { useUpdateProject } from "../api/use-update-project";
 import { useConform } from "@/hooks/use-confirm";
+import { useDeleteProject } from "../api/use-delete-project";
 // import { useDeleteWorkspace } from "../api/use-delete-project";
 interface EditProjectForm {
     onCancel?: () => void;
@@ -35,10 +36,10 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectForm) =>
     );
 
 
-    // const {
-    //     mutate: deleteWorkspace,
-    //     isPending: isDeletingWorkspace
-    // } = useDeleteWorkspace();
+    const {
+        mutate: deleteProject,
+        isPending: isDeletingProject
+    } = useDeleteProject();
 
     const router = useRouter();
     const { mutate, isPending } = useUpdateProject();
@@ -50,22 +51,22 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectForm) =>
         }
     });
 
-    // const handleDelete = async () => {
-    //     const ok = await confirmDelete();
-    //     if (!ok) return;
+    const handleDelete = async () => {
+        const ok = await confirmDelete();
+        if (!ok) return;
 
-    //     deleteWorkspace({
-    //         param: {
-    //             workspaceId: initialValues.$id,
-    //         }
-    //     }, {
-    //         onSuccess: () => {
-    //             window.location.href = "/";
-    //         }
-    //     }
-    //     )
+        deleteProject({
+            param: {
+                projectId: initialValues.$id,
+            }
+        }, {
+            onSuccess: () => {
+                window.location.href = `/workspaces/${initialValues.workspaceId}`;
+            }
+        }
+        )
 
-    // }
+    }
 
 
 
@@ -74,7 +75,11 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectForm) =>
     const onsubmit = (values: z.infer<typeof UpdateProjectSchema>) => {
         const finalSubmit = {
             ...values,
-            image: values.image instanceof File ? values.image : "",
+            image: values.image instanceof File
+                ? values.image
+                : typeof values.image === "string" && values.image.trim() !== ""
+                    ? values.image
+                    : undefined,
         }
         mutate({
             form: finalSubmit,
@@ -104,12 +109,14 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectForm) =>
             <DeleteDailogue />
             <Card className="w-full h-full  border-none shadow-none">
                 <CardHeader className=" flex flex-row items-center gap-x-4 space-y-0 p-7">
-                    <Button size="sm" variant="secondary" onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.workspaceId}/projects/${initialValues.$id}/settings`)}>
+                    <Button size="sm" variant="secondary"
+                        onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.workspaceId}/projects/${initialValues.$id}`)}
+                    >
                         <ArrowLeftIcon className="size-4 mr-2" />
                         Back
                     </Button>
                     <CardTitle className="text-xl font-bold">
-                        {initialValues.name}    
+                        {initialValues.name}
                     </CardTitle>
                 </CardHeader>
                 <div className="px-7">
@@ -236,7 +243,7 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectForm) =>
                             Deleting a Project is iireversible and will remove all associate
                         </p>
                         <DottedSeperator className="py-7" />
-                        <Button variant="destructive" size="sm" className="mt-6 w-fit ml-auto" onClick={() => { }} disabled={isPending}>
+                        <Button variant="destructive" size="sm" className="mt-6 w-fit ml-auto" onClick={handleDelete} disabled={isPending || isDeletingProject}>
                             Delete Project
                         </Button>
                     </div>
