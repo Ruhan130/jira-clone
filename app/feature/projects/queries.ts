@@ -6,7 +6,7 @@ import { Project } from "./types";
 interface GetProjectProps {
     projectId: string
 }
-export const getWorkspace = async ({ projectId }: GetProjectProps) => {
+export const getProject= async ({ projectId }: GetProjectProps) => {
     try {
         const { databases, account } = await createSessionClient();
         const user = await account.get();
