@@ -5,7 +5,8 @@ import { z } from "zod";
 import { getMember } from "../../members/utils";
 import { DATABASE_ID, IMAGE_BUCKET_ID, PROJECTS_ID } from "@/config";
 import { ID, Query } from "node-appwrite";
-import { createProjectSchema } from "../schemas";
+import { createProjectSchema, UpdateProjectSchema } from "../schemas";
+import { Project } from "../types";
 
 
 const app = new Hono()
@@ -104,6 +105,68 @@ const app = new Hono()
         }
 
 
+    ).patch(
+        "/:projectId",
+        sessionMiddleware,
+        zValidator("form", UpdateProjectSchema),
+        async (c) => {
+
+            const databases = c.get("databases");
+            const storage = c.get("storage");
+            const user = c.get("user");
+
+            const { projectId } = c.req.param();
+
+            const { name, image } = c.req.valid("form");
+
+            const exsistingProject = await databases.getDocument<Project>(
+                DATABASE_ID,
+                PROJECTS_ID,
+                projectId
+            )
+
+            const memeber = await getMember({
+                databases,
+                workspaceId: exsistingProject.workspaceId,
+                userId: user.$id,
+            });
+
+            if (!memeber) {
+                return c.json({ error: "Unuthoirzed" }, 401);
+            }
+
+            let uploadedImageUrl: string | null = null;
+
+            if (image instanceof File) {
+                const file = await storage.createFile(
+                    IMAGE_BUCKET_ID,
+                    ID.unique(),
+                    image,
+                );
+                const arryBuffer = await storage.getFileView(
+                    IMAGE_BUCKET_ID,
+                    file.$id
+                );
+                uploadedImageUrl = `data:image/png;base64,${Buffer.from(arryBuffer).toString("base64")}`;
+            } else if (typeof image === "string" && image.trim() !== "") {
+                // Keep existing image
+                uploadedImageUrl = image;
+            } else if (image === null || image === undefined || image === "") {
+                // 👇 Explicitly remove the image
+                uploadedImageUrl = null;
+            }
+
+            const project = await databases.updateDocument(
+                DATABASE_ID,
+                PROJECTS_ID,
+                projectId,
+                {
+                    name,
+                    imageUrl: uploadedImageUrl
+                }
+            );
+            return c.json({ data: project })
+        }
     )
 
 

@@ -86,12 +86,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
             param: {
                 workspaceId: initialValues.$id,
             }
-        }, {
-            onSuccess: () => {
-                router.refresh();
-            }
-        }
-        )
+        });
 
 
     }
@@ -109,8 +104,6 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
         }, {
             onSuccess: ({ data }) => {
                 form.reset();
-                // onCancel?.();
-                router.push(`/workspaces/${data.$id}`);
             }
         });
     };
