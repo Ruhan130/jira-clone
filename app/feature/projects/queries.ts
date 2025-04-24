@@ -6,28 +6,27 @@ import { Project } from "./types";
 interface GetProjectProps {
     projectId: string
 }
-export const getProject= async ({ projectId }: GetProjectProps) => {
-    throw new Error("test");
-    
-        const { databases, account } = await createSessionClient();
-        const user = await account.get();
+export const getProject = async ({ projectId }: GetProjectProps) => {
 
-        const project = await databases.getDocument<Project>(
-            DATABASE_ID,
-            PROJECTS_ID,
-            projectId
-        );
-        const member = await getMember({
-            databases,
-            userId: user.$id,
-            workspaceId: project.workspaceId
-        });
+    const { databases, account } = await createSessionClient();
+    const user = await account.get();
 
-        if (!member) {
-            throw new Error("Unauthorzied");
-        }
+    const project = await databases.getDocument<Project>(
+        DATABASE_ID,
+        PROJECTS_ID,
+        projectId
+    );
+    const member = await getMember({
+        databases,
+        userId: user.$id,
+        workspaceId: project.workspaceId
+    });
+
+    if (!member) {
+        throw new Error("Unauthorzied");
+    }
 
 
-        return project;
-    
+    return project;
+
 };
