@@ -50,34 +50,34 @@ const app = new Hono()
             }
 
             const query = [
-                Query.equal("worksapceId", workspaceId),
-                Query.orderDesc("$creaetdAt"),
+                Query.equal("workspaceId", workspaceId),
+                Query.orderDesc("$createdAt"),
             ]
 
             if (projectId) {
                 console.log("projectId:", projectId);
-                query.push(Query.equal("projectId:", projectId));
+                query.push(Query.equal("projectId", projectId));
             }
 
             if (status) {
                 console.log("status:", status);
-                query.push(Query.equal("status:", status));
+                query.push(Query.equal("status", status));
             }
 
             if (assigneeId) {
                 console.log("assigneeId:", assigneeId);
-                query.push(Query.equal("assigneeId:", assigneeId));
+                query.push(Query.equal("assigneeId", assigneeId));
             };
 
 
             if (dueDate) {
                 console.log("dueDate:", dueDate);
-                query.push(Query.equal("dueDate:", dueDate));
+                query.push(Query.equal("dueDate", dueDate));
             };
 
             if (search) {
                 console.log("search:", search);
-                query.push(Query.equal("search:", search));
+                query.push(Query.equal("search", search));
             };
 
 
@@ -156,8 +156,18 @@ const app = new Hono()
                 projectId,
                 dueDate,
                 assigneeId,
-                description
+
             } = c.req.valid("json");
+
+            console.log({
+                name,
+                status,
+                workspaceId,
+                projectId,
+                dueDate,
+                assigneeId,
+
+            });
 
 
             const member = await getMember({
@@ -175,8 +185,8 @@ const app = new Hono()
                 TASKS_ID,
                 [
                     Query.equal("status", status),
-                    Query.equal("worksapceId", workspaceId),
-                    Query.orderAsc("positon"),
+                    Query.equal("workspaceId", workspaceId),
+                    Query.orderAsc("position"),
                     Query.limit(1)
                 ]
             );
@@ -189,18 +199,17 @@ const app = new Hono()
                 TASKS_ID,
                 ID.unique(),
                 {
-                    name,
-                    status,
-                    workspaceId,
-                    projectId,
-                    dueDate,
-                    assigneeId,
-                    description,
+                    name: name,
+                    status: status,
+                    workspaceId: workspaceId,
+                    projectId: projectId,
+                    dueDate: dueDate.toISOString(),
+                    assigneeId: assigneeId,
                     position: newPosition
                 }
 
             );
-
+            console.log(task);
             return c.json({ data: task });
 
 
