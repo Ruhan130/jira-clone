@@ -13,16 +13,16 @@ export const CreateTaskFormWRapper = ({ onCanel }: CreateTaskWrapperProps) => {
     const { data: members, isLoading: isLoadingMembers } = useGetMember({ workspaceId });
     const { data: projects, isLoading: isLoadingProjects } = useGetProjects({ workspaceId });
 
-    const projectOptions = projects?.documents.map((projects) => {
-        id: projects.$id;
-        name: projects.name;
-        imageUrl: projects.imageUrl;
-    });
+    const projectOptions = projects?.documents.map((projects) => ({
+        id: projects.$id,
+        name: projects.name,
+        imageUrl: projects.imageUrl,
+    }));
 
-    const memberOptions = members?.documents.map((members) => {
-        id: members.$id;
-        name: members.name;
-    });
+    const memberOptions = members?.documents.map((project) => ({
+        id: project.$id,
+        name: project.name,
+    }));
 
     const isLoading = isLoadingProjects || isLoadingMembers;
 
@@ -35,4 +35,11 @@ export const CreateTaskFormWRapper = ({ onCanel }: CreateTaskWrapperProps) => {
             </Card>
         )
 
-}
+    return (
+        <div>
+            {JSON.stringify(projectOptions)}
+            {JSON.stringify(memberOptions)}
+        </div>
+    )
+
+} 
