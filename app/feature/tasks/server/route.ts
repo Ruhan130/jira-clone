@@ -77,7 +77,7 @@ const app = new Hono()
 
             if (search) {
                 console.log("search:", search);
-                query.push(Query.equal("search", search));
+                query.push(Query.equal("name", search));
             };
 
 
@@ -87,7 +87,7 @@ const app = new Hono()
                 query
             );
 
-            const projectIds = tasks.documents.map((task) => task.projectIds);
+            const projectIds = tasks.documents.map((task) => task.projectId);
             const assigneeIds = tasks.documents.map((task) => task.assigneeId);
 
 
@@ -105,7 +105,7 @@ const app = new Hono()
 
             const assignees = await Promise.all(
                 members.documents.map(async (member) => {
-                    const user = await users.get(member.$id);
+                    const user = await users.get(member.userId);
                     return {
                         ...member,
                         name: user.name,

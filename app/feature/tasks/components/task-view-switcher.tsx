@@ -5,9 +5,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlusIcon } from "lucide-react"
 import { UseCreateProjectModal } from "../../projects/hooks/use-create-project-modal"
 import { UseCreateTaskModal } from "../hooks/use-create-task-modal";
+import { useCreateTask } from "../api/use-create-task";
+import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
+import { useGetTasks } from "../api/use-get-tasks";
 
 export const TaskViewSwitcher = () => {
-    
+    const workspaceId = UseWorkspaceId();
+    const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({ workspaceId });
     const { open, setIsOpen } = UseCreateTaskModal();
 
     return (
@@ -36,15 +40,17 @@ export const TaskViewSwitcher = () => {
                 <DottedSeperator className="my-4" />
                 DATA FILTER
                 <DottedSeperator className="my-4" />
-                <TabsContent value="table" className="mt-0">
-                    Table
-                </TabsContent>
-                <TabsContent value="kanban" className="mt-0">
-                    kanban
-                </TabsContent>
-                <TabsContent value="calender" className="mt-0">
-                    calender
-                </TabsContent>
+                <>
+                    <TabsContent value="table" className="mt-0">
+                        {JSON.stringify(tasks)}
+                    </TabsContent>
+                    <TabsContent value="kanban" className="mt-0">
+                        {JSON.stringify(tasks)}
+                    </TabsContent>
+                    <TabsContent value="calender" className="mt-0">
+                        {JSON.stringify(tasks)}
+                    </TabsContent>
+                </>
 
             </div>
         </Tabs>
