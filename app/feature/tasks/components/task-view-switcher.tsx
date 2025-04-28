@@ -8,14 +8,19 @@ import { UseCreateTaskModal } from "../hooks/use-create-task-modal";
 import { useCreateTask } from "../api/use-create-task";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 import { useGetTasks } from "../api/use-get-tasks";
+import { useQueryState } from "nuqs";
 
 export const TaskViewSwitcher = () => {
+    const [view, setView] = useQueryState("task-view", {
+        defaultValue: "table,"
+    });
+
     const workspaceId = UseWorkspaceId();
     const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({ workspaceId });
     const { open, setIsOpen } = UseCreateTaskModal();
 
     return (
-        <Tabs className="flex-1 w-full border rounded-lg">
+        <Tabs defaultValue={view} onValueChange={setView} className="flex-1 w-full border rounded-lg">
             <div className="h-full flex flex-col overflow-auto p-4">
                 <div className="flex flex-col gap-y-2 lg:flex-row  justify-between items-center">
                     <TabsList className="w-full lg:w-auto">
