@@ -7,6 +7,7 @@ import { UseCreateProjectModal } from "../../projects/hooks/use-create-project-m
 import { UseCreateTaskModal } from "../hooks/use-create-task-modal";
 
 export const TaskViewSwitcher = () => {
+    
     const { open, setIsOpen } = UseCreateTaskModal();
 
     return (
