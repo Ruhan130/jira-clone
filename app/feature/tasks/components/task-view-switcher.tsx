@@ -1,9 +1,14 @@
+"use client";
 import { DottedSeperator } from "@/components/dotted-seperater.tsx/dotted-seperater"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlusIcon } from "lucide-react"
+import { UseCreateProjectModal } from "../../projects/hooks/use-create-project-modal"
+import { UseCreateTaskModal } from "../hooks/use-create-task-modal";
 
 export const TaskViewSwitcher = () => {
+    const { open, setIsOpen } = UseCreateTaskModal();
+
     return (
         <Tabs className="flex-1 w-full border rounded-lg">
             <div className="h-full flex flex-col overflow-auto p-4">
@@ -19,7 +24,10 @@ export const TaskViewSwitcher = () => {
                             Calender
                         </TabsTrigger>
                     </TabsList>
-                    <Button className="w-full lg:w-auto" size="sm">
+                    <Button
+                        onClick={open}
+                        className="w-full lg:w-auto"
+                        size="sm">
                         <PlusIcon className="size-4 mr-2" />
                         New
                     </Button>
