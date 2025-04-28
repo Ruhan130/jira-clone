@@ -156,7 +156,7 @@ const app = new Hono()
                 projectId,
                 dueDate,
                 assigneeId,
-                description
+
             } = c.req.valid("json");
 
             console.log({
@@ -166,7 +166,7 @@ const app = new Hono()
                 projectId,
                 dueDate,
                 assigneeId,
-                description
+
             });
 
 
@@ -199,18 +199,17 @@ const app = new Hono()
                 TASKS_ID,
                 ID.unique(),
                 {
-                    workspaceId,
-                    name,
-                    projectId,
-                    assigneeId,
-                    description,
+                    name: name,
+                    status: status,
+                    workspaceId: workspaceId,
+                    projectId: projectId,
                     dueDate: dueDate.toISOString(),
-                    status,
+                    assigneeId: assigneeId,
                     position: newPosition
                 }
 
             );
-
+            console.log(task);
             return c.json({ data: task });
 
 
