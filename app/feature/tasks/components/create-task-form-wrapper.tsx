@@ -37,7 +37,10 @@ export const CreateTaskFormWRapper = ({ onCanel }: CreateTaskWrapperProps) => {
         )
 
     return (
-        <CreateTaskForm onCancel={onCanel} projectOptions={projectOptions ?? []} memberOptions={memberOptions ?? []} />
+        <CreateTaskForm
+            onCancel={onCanel}
+            projectOptions={projectOptions ?? []}
+            memberOptions={memberOptions ?? []} />
     )
 
 } 

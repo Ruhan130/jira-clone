@@ -9,4 +9,6 @@ export const createTaskSchenma = z.object({
     dueDate: z.coerce.date(),
     assigneeId: z.string().trim().min(1, "Required"),
     description: z.string().optional()
-})
+});
+
+export const createTaskSchemaWithId = createTaskSchenma.omit({ workspaceId: true });
