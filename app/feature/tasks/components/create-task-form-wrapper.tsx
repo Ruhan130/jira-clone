@@ -3,6 +3,7 @@ import { useGetMember } from "../../members/api/use-get-members";
 import { useGetProjects } from "../../projects/api/use-get-projects";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 import { Loader } from "lucide-react";
+import { CreateTaskForm } from "./create-task-form";
 
 interface CreateTaskWrapperProps {
     onCanel: () => void;
@@ -36,10 +37,7 @@ export const CreateTaskFormWRapper = ({ onCanel }: CreateTaskWrapperProps) => {
         )
 
     return (
-        <div>
-            {JSON.stringify(projectOptions)}
-            {JSON.stringify(memberOptions)}
-        </div>
+        <CreateTaskForm onCancel={onCanel} projectOptions={projectOptions ?? []} memberOptions={memberOptions ?? []} />
     )
 
 } 
