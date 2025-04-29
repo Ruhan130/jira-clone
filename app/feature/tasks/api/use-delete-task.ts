@@ -18,12 +18,12 @@ export const useDeletTask = () => {
                 const response = await client.api.tasks[":taskId"]["$delete"]({ param });
 
                 if (!response.ok) {
-                    throw new Error("Failed to Delete Task");
+                    throw new Error("Failed to Delete ");
                 }
                 return await response.json();
             },
             onSuccess: ({ data }) => {
-                toast.success("Task Delete");
+                toast.success("Task Deleted");
                 router.refresh();
                 queryClient.invalidateQueries({ queryKey: ["tasks"] });
                 queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
