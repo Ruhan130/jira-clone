@@ -6,6 +6,7 @@ import { Loader } from "lucide-react";
 import { CreateTaskForm } from "./create-task-form";
 
 import { useGetTask } from "../api/use-get-task";
+import { EditTaskForm } from "./edit-task-form";
 
 interface EditWrapperProps {
     onCanel: () => void;
@@ -47,10 +48,12 @@ export const EditTaskFormWRapper = ({ onCanel, id }: EditWrapperProps) => {
     }
 
     return (
-        <CreateTaskForm
+        <EditTaskForm
             onCancel={onCanel}
             projectOptions={projectOptions ?? []}
-            memberOptions={memberOptions ?? []} />
+            memberOptions={memberOptions ?? []}
+            initialValues={initialValues}
+        />
     )
 
 } 

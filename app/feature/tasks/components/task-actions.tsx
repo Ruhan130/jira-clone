@@ -9,6 +9,7 @@ import { ExternalLink, ExternalLinkIcon, PencilIcon, TrashIcon } from "lucide-re
 import { useDeletTask } from "../api/use-delete-task";
 import { useRouter } from "next/navigation";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
+import { UseEditTaskModel } from "../hooks/use-edit-task-modal";
 interface TaskActionProps {
     id: string;
     projectId: string;
@@ -16,6 +17,8 @@ interface TaskActionProps {
 }
 
 export const TaskActions = ({ id, projectId, children }: TaskActionProps) => {
+
+    const { open } = UseEditTaskModel();
 
     const [ConformDialogue, confirm] = useConform(
         "Delete task",
@@ -72,7 +75,7 @@ export const TaskActions = ({ id, projectId, children }: TaskActionProps) => {
 
                     <DropdownMenuItem
 
-                        onClick={() => { }}
+                        onClick={() => open(id)}
                         className="font-medium p-[10px] ">
                         <PencilIcon className="size-4 mr-2 stroke-2" />
                         Edit Task

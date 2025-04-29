@@ -8,7 +8,7 @@ export const createTaskSchenma = z.object({
     description: z.string().optional(),
     dueDate: z.coerce.date(),
     assigneeId: z.string().trim().min(1, "Required"),
-    status: z.nativeEnum(TaskType, { required_error: "Requried" }),
+    status: z.nativeEnum(TaskType, { required_error: "Requried" }).optional(),
 });
 
-export const createTaskSchemaWithId = createTaskSchenma.omit({ workspaceId: true });
+export const createTaskSchemaWithId = createTaskSchenma.omit({ workspaceId: true, description: true });
