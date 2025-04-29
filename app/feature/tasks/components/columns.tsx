@@ -6,6 +6,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react"
 import { ProjectAvatar } from "../../projects/component/create-project-avatar";
 import { MemberAvatar } from "../../members/component/member-avatar";
+import { TaskDate } from "./task-date";
+import { Badge } from "@/components/ui/badge";
+import { snakeCaseToTitleCase } from "@/lib/utils";
 
 export const columns: ColumnDef<Task>[] = [
     {
@@ -81,5 +84,45 @@ export const columns: ColumnDef<Task>[] = [
                 </div>
             )
         }
+    },
+
+    {
+        accessorKey: "dueDate",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    DueDate
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const dueDate = row.original.dueDate;
+            return <TaskDate value={dueDate} />
+        }
+    },
+    {
+        accessorKey: "status",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Stauts
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const status = row.original.status;
+            return <Badge>
+                {snakeCaseToTitleCase(status)}
+            </Badge>
+        }
     }
+
 ]
