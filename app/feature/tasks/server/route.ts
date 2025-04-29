@@ -9,6 +9,7 @@ import { ID, Query } from "node-appwrite";
 import { Task, TaskType } from "../types";
 import { createAdminClient } from "@/lib/appwrite";
 import { Project } from "../../projects/types";
+import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 
 const app = new Hono()
     .delete(
@@ -243,6 +244,74 @@ const app = new Hono()
                     dueDate: dueDate.toISOString(),
                     assigneeId: assigneeId,
                     position: newPosition
+                }
+
+            );
+            console.log(task);
+            return c.json({ data: task });
+
+
+        }
+    )
+    .patch(
+        "/:taskId",
+        sessionMiddleware,
+        zValidator("json", createTaskSchenma.partial()),
+        async (c) => {
+            const user = c.get("user");
+            const databases = c.get("databases");
+            const { taskId } = c.req.param();
+            const {
+                name,
+                status,
+                description,
+                projectId,
+                dueDate,
+                assigneeId,
+
+            } = c.req.valid("json");
+
+            console.log({
+                name,
+                status,
+
+                projectId,
+                dueDate,
+                assigneeId,
+
+            });
+
+            const exsistingMember = await databases.getDocument<Task>(
+                DATABASE_ID,
+                TASKS_ID,
+                taskId,
+            )
+
+
+            const member = await getMember({
+                databases,
+                workspaceId: exsistingMember.workspaceId,
+                userId: user.$id
+            });
+
+            if (!member) {
+                return c.json({ error: "Unauthorized" }, 401);
+            }
+
+
+
+            const task = await databases.updateDocument(
+                DATABASE_ID,
+                TASKS_ID,
+                ID.unique(),
+                {
+                    name: name,
+                    status: status,
+                    projectId: projectId,
+                    dueDate: dueDate,
+                    assigneeId: assigneeId,
+                    description: description,
+
                 }
 
             );
