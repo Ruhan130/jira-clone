@@ -39,7 +39,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
         mutate({ json: { ...values, workspaceId } }, {
             onSuccess: () => {
                 form.reset();
-
+                onCancel?.();
             }
         });
     };
@@ -49,7 +49,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
             <Card className="w-full h-full  border-none shadow-none">
                 <CardHeader className=" flex p-7">
                     <CardTitle className="text-xl font-bold">
-                        Create new Project
+                        Create new Task
                     </CardTitle>
                 </CardHeader>
                 <div className="px-7">
@@ -179,7 +179,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>
-                                                Project ID
+                                                Task ID
                                             </FormLabel>
                                             <Select defaultValue={field.value}
                                                 onValueChange={field.onChange} >
