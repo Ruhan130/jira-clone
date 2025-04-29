@@ -7,6 +7,7 @@ import { FolderIcon, ListCheckIcon, UserIcon } from "lucide-react";
 
 import { TaskType } from "../types";
 import { useTaskFilter } from "../hooks/use-task-filters";
+import { DatePicker } from "@/components/date-picker";
 // import { useGetTasks } from "../api/use-get-tasks";
 
 interface DataFilterProps {
@@ -87,7 +88,7 @@ export const DataFilter = ({ hideProjectFilter }: DataFilterProps) => {
             <Select defaultValue={assigneeId ?? undefined} onValueChange={(value) => onAssigneeChange(value)}  >
                 <SelectTrigger className="w-full lg:w-auto h-8">
                     <UserIcon className="size-8 pr-2" />
-                    <SelectValue placeholder="All Statuses" />
+                    <SelectValue placeholder="All assignees" />
                 </SelectTrigger>
                 <SelectContent>
 
@@ -109,7 +110,7 @@ export const DataFilter = ({ hideProjectFilter }: DataFilterProps) => {
             <Select defaultValue={projectId ?? undefined} onValueChange={(value) => onProjectChange(value)}  >
                 <SelectTrigger className="w-full lg:w-auto h-8">
                     <FolderIcon className="size-8 pr-2" />
-                    <SelectValue placeholder="All Statuses" />
+                    <SelectValue placeholder="All Projects" />
                 </SelectTrigger>
                 <SelectContent>
 
@@ -125,6 +126,14 @@ export const DataFilter = ({ hideProjectFilter }: DataFilterProps) => {
 
                 </SelectContent>
             </Select>
+            <DatePicker
+                placeholder="Due Date"
+                className="w-full lg:w-auto h-8"
+                value={dueDate ? new Date(dueDate) : undefined}
+                onChange={(date) => {
+                    setFilters({ dueDate: date ? date.toISOString() : null })
+                }}
+            />
         </div>
     )
 
