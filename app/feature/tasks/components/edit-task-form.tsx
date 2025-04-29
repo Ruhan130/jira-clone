@@ -25,14 +25,12 @@ interface EditTaskFormProps {
 };
 
 export const EditTaskForm = ({ onCancel, projectOptions, memberOptions, initialValues }: EditTaskFormProps) => {
-    const workspaceId = UseWorkspaceId();
     const { mutate, isPending } = useUpdateTask();
 
-    const form = useForm<z.infer<typeof createTaskSchenma>>({
-        resolver: zodResolver(createTaskSchenma),
+    const form = useForm<z.infer<typeof createTaskSchemaWithId>>({
+        resolver: zodResolver(createTaskSchemaWithId),
         defaultValues: {
             ...initialValues,
-            status: initialValues.status as TaskType,
             dueDate: initialValues.dueDate ? new Date(initialValues.dueDate) : undefined,
         }
     });
