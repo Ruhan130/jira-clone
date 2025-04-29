@@ -7,6 +7,8 @@ import {
 import { useConform } from "@/hooks/use-confirm";
 import { ExternalLink, ExternalLinkIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { useDeletTask } from "../api/use-delete-task";
+import { useRouter } from "next/navigation";
+import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 interface TaskActionProps {
     id: string;
     projectId: string;
@@ -19,7 +21,18 @@ export const TaskActions = ({ id, projectId, children }: TaskActionProps) => {
         "Delete task",
         "This action can not be undone",
         "destructive"
-    )
+    );
+
+    const router = useRouter();
+    const workspaceId = UseWorkspaceId();
+
+    const onOpenTask = () => {
+        router.push(`/workspaces/${workspaceId}/tasks/${id}`);
+    }
+
+    const onOpenProject = () => {
+        router.push(`/workspaces/${workspaceId}/projects/${projectId}`)
+    }
 
     const { mutate, isPending } = useDeletTask();
     const onDelete = async () => {
@@ -41,7 +54,7 @@ export const TaskActions = ({ id, projectId, children }: TaskActionProps) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
                     <DropdownMenuItem
-                        onClick={() => { }}
+                        onClick={onOpenTask}
 
                         className="font-medium p-[10px] "
                     >
@@ -51,7 +64,7 @@ export const TaskActions = ({ id, projectId, children }: TaskActionProps) => {
 
                     <DropdownMenuItem
 
-                        onClick={() => { }}
+                        onClick={onOpenProject}
                         className="font-medium p-[10px] ">
                         <ExternalLink className="size-4 mr-2 stroke-2" />
                         Open Project
