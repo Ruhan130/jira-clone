@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Task } from "../types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react"
+import { ProjectAvatar } from "../../projects/component/create-project-avatar";
+import { MemberAvatar } from "../../members/component/member-avatar";
 
 export const columns: ColumnDef<Task>[] = [
     {
@@ -14,10 +16,70 @@ export const columns: ColumnDef<Task>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Email
+                    Task Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
         },
+        cell: ({ row }) => {
+            const name = row.original.name;
+            return <p className="line-clamp-1" >{name}</p>
+        }
+    },
+
+    {
+        accessorKey: "project",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Project
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const project = row.original.project;
+            return (
+                <div className="flex items-center text-sm gap-x-2 from-medium">
+                    <ProjectAvatar
+                        className="size-6"
+                        image={project.image}
+                        name={project.name}
+                    />
+                    <p className="line-clamp-1">{project.name}</p>
+                </div>
+            )
+        }
+    },
+
+    {
+        accessorKey: "assignee",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Assignee
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const assignee = row.original.assignee;
+            return (
+                <div className="flex items-center text-sm gap-x-2 from-medium">
+                    <MemberAvatar
+                        className="size-6"
+                        // image={assignee.image}
+                        name={assignee.name}
+                    />
+                    <p className="line-clamp-1">{assignee.name}</p>
+                </div>
+            )
+        }
     }
 ]
