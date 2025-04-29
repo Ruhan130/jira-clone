@@ -105,6 +105,7 @@ export const columns: ColumnDef<Task>[] = [
             return <TaskDate value={dueDate} />
         }
     },
+    
     {
         accessorKey: "status",
         header: ({ column }) => {
