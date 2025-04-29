@@ -21,7 +21,7 @@ const app = new Hono()
             const { taskId } = c.req.param();
 
 
-            const task = await databases.getDocument(
+            const task = await databases.getDocument<Task>(
                 DATABASE_ID,
                 TASKS_ID,
                 taskId
