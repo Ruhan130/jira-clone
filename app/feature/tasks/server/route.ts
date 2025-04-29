@@ -6,7 +6,7 @@ import { createTaskSchenma } from "../schemas";
 import { getMember } from "../../members/utils";
 import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 import { ID, Query } from "node-appwrite";
-import { TaskType } from "../types";
+import { Task, TaskType } from "../types";
 import { createAdminClient } from "@/lib/appwrite";
 import { Project } from "../../projects/types";
 
@@ -81,7 +81,7 @@ const app = new Hono()
             };
 
 
-            const tasks = await databases.listDocuments(
+            const tasks = await databases.listDocuments<Task>(
                 DATABASE_ID,
                 TASKS_ID,
                 query
