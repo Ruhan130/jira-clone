@@ -2,7 +2,7 @@
 
 import { ResponsiveModal } from "@/components/responsive-modal";
 import { UseEditTaskModel } from "../hooks/use-edit-task-modal";
-import { EditTaskFormWRapper } from "./create-edit-form-wrapper";
+import { EditTaskFormWRapper } from "./edit-form-wrapper";
 
 export const CreateEditModel = () => {
     const { taskId, close } = UseEditTaskModel();

@@ -5,6 +5,8 @@ import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 import { Loader } from "lucide-react";
 import { CreateTaskForm } from "./create-task-form";
 
+import { useGetTask } from "../api/use-get-task";
+
 interface EditWrapperProps {
     onCanel: () => void;
     id: string,
@@ -12,6 +14,8 @@ interface EditWrapperProps {
 
 export const EditTaskFormWRapper = ({ onCanel, id }: EditWrapperProps) => {
     const workspaceId = UseWorkspaceId();
+
+    const { data: initialValues, isLoading: isLoadingTask } = useGetTask({ taskId: id });
     const { data: members, isLoading: isLoadingMembers } = useGetMember({ workspaceId });
     const { data: projects, isLoading: isLoadingProjects } = useGetProjects({ workspaceId });
 
@@ -27,7 +31,7 @@ export const EditTaskFormWRapper = ({ onCanel, id }: EditWrapperProps) => {
         name: project.name,
     }));
 
-    const isLoading = isLoadingProjects || isLoadingMembers;
+    const isLoading = isLoadingProjects || isLoadingMembers || isLoadingTask;
 
     if (isLoading)
         return (
@@ -37,6 +41,10 @@ export const EditTaskFormWRapper = ({ onCanel, id }: EditWrapperProps) => {
                 </CardContent>
             </Card>
         )
+
+    if (!initialValues) {
+        return null;
+    }
 
     return (
         <CreateTaskForm
