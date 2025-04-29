@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 type ResponseType = InferResponseType<typeof client.api.tasks[":taskId"]["$patch"], 200>;
 type RequestType = InferRequestType<typeof client.api.tasks[":taskId"]["$patch"]>;
 
-export const useDeletTask = () => {
+export const useUpdateTask = () => {
     const router = useRouter();
 
     const queryClient = useQueryClient();
