@@ -13,6 +13,7 @@ import { enUS } from "date-fns/locale"
 import { useState } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import "./data-calendar.css"
+import { EventCard } from "./event-card";
 
 
 const locales = {
@@ -70,6 +71,20 @@ export const DataCalendar = ({
             formats={
                 {
                     weekdayFormat: (date, culture, localizer) => localizer?.format(date, "EEE", culture) ?? ""
+                }
+            }
+            components={
+                {
+                    eventWrapper: ({ event }) => (
+                        <EventCard
+                            id={event.id}
+                            title={event.title}
+                            assignee={event.assignee}
+                            project={event.project}
+                            status={event.status}
+
+                        />
+                    )
                 }
             }
         />
