@@ -6,6 +6,7 @@ import {
     DropResult
 } from "@hello-pangea/dnd"
 import { Task, TaskType } from "../types";
+import { KanbanColumnHeader } from "./kanban-column-header";
 
 const boards: TaskType[] = [
     TaskType.BACKLOG,
@@ -52,8 +53,11 @@ export const DataKanban = ({
             <div className="flex overflow-x-auto">
                 {boards.map((board) => {
                     return (
-                        <div className="flex-1 mr-2 bg-muted p-1.5 rounded-md min-w-[200px]">
-                            {board}
+                        <div key={board} className="flex-1 mr-2 bg-muted p-1.5 rounded-md min-w-[200px]">
+                            <KanbanColumnHeader
+                                board={board}
+                                taskCount={task[board].length}
+                            />
                         </div>
                     )
                 })}

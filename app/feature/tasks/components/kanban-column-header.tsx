@@ -1,0 +1,56 @@
+import { snakeCaseToTitleCase } from "@/lib/utils";
+import { TaskType } from "../types";
+import React from "react";
+import { CircleCheckIcon, CircleDashedIcon, CircleDotDashedIcon, CircleDotIcon, CircleIcon, PlusIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useCreateTask } from "../api/use-create-task";
+import { UseCreateTaskModal } from "../hooks/use-create-task-modal";
+
+interface KanbanColumnHeaderProps {
+    board: TaskType;
+    taskCount: number;
+}
+
+const statusIconMap: Record<TaskType, React.ReactNode> = {
+    [TaskType.BACKLOG]: (
+        <CircleDashedIcon className="size-[18px] text-pink-400" />
+    ),
+    [TaskType.TODO]: (
+        <CircleIcon className="size-[18px] text-red-400" />
+    ),
+    [TaskType.IN_PROGRESS]: (
+        <CircleDotDashedIcon className="size-[18px] text-yellow-400" />
+    ),
+    [TaskType.IN_REVIEW]: (
+        <CircleDotIcon className="size-[18px] text-blue-400" />
+    ),
+    [TaskType.DONE]: (
+        <CircleCheckIcon className="size-[18px] text-emerald-400-400" />
+    ),
+}
+
+
+export const KanbanColumnHeader = ({
+    board,
+    taskCount,
+}: KanbanColumnHeaderProps) => {
+    const { open } = UseCreateTaskModal();
+    const icon = statusIconMap[board];
+
+    return (
+        <div className="px-2 py-1.5 flex items-center justify-between">
+            <div className="flex items-center gap-x-2">
+                {icon}
+                <h2 className="text-sm font-medium">
+                    {snakeCaseToTitleCase(board)}
+                </h2>
+                <div className="size-5 flex items-center justify-center rounded-md bg-neutral-200 text-xs text-neutral-700 font-medium ">
+                    {taskCount}
+                </div>
+            </div>
+            <Button onClick={open} className="size-5" variant="ghost" size="icon" >
+                <PlusIcon className="size-4 text-neutral-400" />
+            </Button>
+        </div>
+    )
+}
