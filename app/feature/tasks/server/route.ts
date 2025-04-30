@@ -393,9 +393,9 @@ const app = new Hono()
         ),
         async (c) => {
             const databases = c.get("databases");
-            const user = await c.get("user");
+            const user =  c.get("user");
 
-            const { tasks } = c.req.valid("json");
+            const { tasks } = await c.req.valid("json");
 
             const taskToUpdate = await databases.listDocuments(
                 DATABASE_ID,

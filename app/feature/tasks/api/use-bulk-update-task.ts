@@ -23,7 +23,7 @@ export const useBulkUpdateTask = () => {
                 return await response.json();
             },
             onSuccess: () => {
-                toast.success("Task Deleted");
+                toast.success("Task updated");
                 // router.refresh();
                 queryClient.invalidateQueries({ queryKey: ["tasks"] });
             },
