@@ -3,10 +3,11 @@ import {
     DragDropContext,
     Droppable,
     Draggable,
-    DropResult
+    type DropResult
 } from "@hello-pangea/dnd"
 import { Task, TaskType } from "../types";
 import { KanbanColumnHeader } from "./kanban-column-header";
+import { KanbanCard } from "./kanban-card";
 
 const boards: TaskType[] = [
     TaskType.BACKLOG,
@@ -74,13 +75,13 @@ export const DataKanban = ({
                                                             {...provided.dragHandleProps}
                                                             {...provided.draggableProps}
                                                         >
-                                                            {task.name}
+                                                            <KanbanCard task={task} />
                                                         </div>
                                                     )
                                                 }
                                             </Draggable>
                                         ))}
-
+                                        {provided.placeholder}
                                     </div>
                                 )}
                             </Droppable>
