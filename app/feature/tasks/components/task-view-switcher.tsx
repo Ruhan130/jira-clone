@@ -17,6 +17,7 @@ import { DataKanban } from "./data-kanban";
 import { useCallback } from "react";
 import { TaskType } from "../types";
 import { useBulkUpdateTask } from "../api/use-bulk-update-task";
+import { DataCalendar } from "./data-calendar";
 
 export const TaskViewSwitcher = () => {
     const [view, setView] = useQueryState("task-view", {
@@ -92,7 +93,7 @@ export const TaskViewSwitcher = () => {
                             <DataKanban onChange={onKanbanChange} data={tasks?.documents ?? []} />
                         </TabsContent>
                         <TabsContent value="calender" className="mt-0">
-                            {JSON.stringify(tasks)}
+                            <DataCalendar data={tasks?.documents ?? []} />
                         </TabsContent>
                     </>
                 )}
