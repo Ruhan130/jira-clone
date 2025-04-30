@@ -10,6 +10,7 @@ import { Task, TaskType } from "../types";
 import { createAdminClient } from "@/lib/appwrite";
 import { Project } from "../../projects/types";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const app = new Hono()
     .delete(
@@ -373,6 +374,65 @@ const app = new Hono()
                 }
             });
 
+        }
+    )
+    .post(
+        "/bulk-update",
+        sessionMiddleware,
+        zValidator(
+            "json",
+            z.object({
+                tasks: z.array(
+                    z.object({
+                        $id: z.string(),
+                        status: z.nativeEnum(TaskType),
+                        position: z.number().int().positive().min(1000).max(1_000_000),
+                    })
+                )
+            })
+        ),
+        async (c) => {
+            const databases = c.get("databases");
+            const user = await c.get("user");
+
+            const { tasks } = c.req.valid("json");
+
+            const taskToUpdate = await databases.listDocuments(
+                DATABASE_ID,
+                TASKS_ID,
+                [Query.contains("$id", tasks.map((task) => task.$id))]
+            );
+
+            const workspaceIds = new Set(taskToUpdate.documents.map(task => task.workspaceId));
+            if (workspaceIds.size !== 1) {
+                return c.json({ error: "All tasks must belong to the same workspace" });
+            }
+
+            const workspaceId = workspaceIds.values().next().value;
+
+            const member = await getMember({
+                databases,
+                workspaceId,
+                userId: user.$id
+            });
+
+            if (!member) {
+                return c.json({ error: "Unauthorzied" }, 401);
+            }
+
+            const updatedTask = await Promise.all(
+                tasks.map(async (task) => {
+                    const { $id, position, status } = task;
+                    return databases.updateDocument<Task>(
+                        DATABASE_ID,
+                        TASKS_ID,
+                        $id,
+                        { status, position }
+                    );
+                })
+            );
+
+            return c.json({ data: updatedTask });
         }
     )
 
