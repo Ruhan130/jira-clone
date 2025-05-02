@@ -3,7 +3,7 @@ import { useCreateProject } from "@/app/feature/projects/api/use-create-project"
 import { useGetProjects } from "@/app/feature/projects/api/use-get-projects";
 import { ProjectAvatar } from "@/app/feature/projects/component/create-project-avatar";
 import { UseCreateProjectModal } from "@/app/feature/projects/hooks/use-create-project-modal";
-import { useGetWorkpsace } from "@/app/feature/workspaces/api/use-get-workspace";
+// import { useGetWorkpsaces } from "@/app/feature/workspaces/api/use-get-workspaces";
 import { UseWorkspaceId } from "@/app/feature/workspaces/hooks/use-workspace-id";
 import { cn } from "@/lib/utils";
 import Link from "next/link";

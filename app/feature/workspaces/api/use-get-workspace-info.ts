@@ -7,17 +7,17 @@ interface useGetProjectsProps {
     workspaceId: string;
 }
 
-export const useGetWorkspace = ({ workspaceId }: useGetProjectsProps) => {
+export const useGetWorkspaceInfo = ({ workspaceId }: useGetProjectsProps) => {
     const query = useQuery({
-        queryKey: ["workspace", workspaceId],
+        queryKey: ["workspace-info", workspaceId],
         queryFn: async () => {
-            const response = await client.api.workspaces[":workspaceId"].$get(
+            const response = await client.api.workspaces[":workspaceId"]["info"].$get(
                 {
                     param: { workspaceId },
                 }
             );
             if (!response.ok) {
-                throw new Error("Failed to fetch workspace");
+                throw new Error("Failed to fetch workspace info");
 
             }
 
