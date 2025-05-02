@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { DottedSeperator } from "@/components/dotted-seperater.tsx/dotted-seperater";
 import { useState } from "react";
 import { useUpdateTask } from "../api/use-update-task";
+import { Textarea } from "@/components/ui/textarea";
 
 interface TaskDescriptionProps {
     task: Task;
@@ -16,7 +17,7 @@ export const TaskDescription = ({ task }: TaskDescriptionProps) => {
 
     const handleSave = () => {
         mutate({
-            json: { description: task.description },
+            json: { description: value },
             param: { taskId: task.$id }
         });
     }
@@ -36,14 +37,35 @@ export const TaskDescription = ({ task }: TaskDescriptionProps) => {
                 </Button>
             </div>
             <DottedSeperator className="my-4" />
-            <div className="flex flex-col gap-y-4">
-                {task.description || (
-                    <span className="text-muted-foreground">
-                        No Description set
-                    </span>
-                )
-                }
-            </div>
+            {isEditing ? (
+
+                <div className="flex flex-col gap-y-4">
+                    <Textarea
+                        placeholder="Add a description..."
+                        value={value}
+                        rows={4}
+                        onChange={(e) => setValue(e.target.value)}
+                        disabled={isPending}
+                    />
+                    <Button
+                        className=" w-fit ml-auto"
+                        size="sm"
+                        onClick={handleSave}
+                        disabled={isPending} >
+                        {isPending ? "Saving" : "Save Changes"}
+                    </Button>
+                </div>
+            ) : (
+                <div >
+                    {
+                        task.description || (
+                            <span className="text-muted-foreground">
+                                No Description set
+                            </span>
+                        )
+                    }
+                </div>
+            )}
         </div>
     )
 }
