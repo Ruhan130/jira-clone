@@ -6,7 +6,7 @@ import { PageError } from "@/components/page-error";
 import { PageLoader } from "@/components/page-loader";
 
 
-export const TaskIdClient = () => {
+export const TaskIdClient = () => { 
     const taskId = useTaskId();
     const { data, isLoading } = useGetTask({ taskId });
     if (isLoading) {
@@ -18,7 +18,6 @@ export const TaskIdClient = () => {
 
     return (
         <p>
-            sas
             {JSON.stringify(data)}
         </p>
 
