@@ -68,6 +68,30 @@ const app = new Hono()
 
         }
     )
+    .get(
+        "/:workspaceId/info",
+        sessionMiddleware,
+        async (c) => {
+            const databases = c.get("databases");
+            const { workspaceId } = c.req.param();
+
+
+            const workspace = await databases.getDocument<Workspace>(
+                DATABASE_ID,
+                WORKSPACES_ID,
+                workspaceId
+            );
+
+            return c.json({
+                data: {
+                    id: workspace.$id,
+                    name: workspace.name,
+                    imageUrl: workspace.imageUrl
+                }
+            })
+
+        }
+    )
     .post("/", zValidator("form", createWrokspaceSchemas), sessionMiddleware, async (c) => {
         const databases = c.get("databases");
         const storage = c.get("storage");
