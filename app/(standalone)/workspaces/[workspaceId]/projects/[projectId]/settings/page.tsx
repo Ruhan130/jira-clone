@@ -1,6 +1,6 @@
 import { getCurrent } from "@/app/feature/auth/queries"
 import { EditProjectForm } from "@/app/feature/projects/component/edit-project-form";
-import { getProject } from "@/app/feature/projects/queries";
+// import { getProject } from "@/app/feature/projects/queries";
 import { redirect } from "next/navigation";
 import { ProjectIdSettingsClient } from "./client";
 
