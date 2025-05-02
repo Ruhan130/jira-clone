@@ -101,11 +101,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
         mutate({
             form: finalSubmit,
             param: { workspaceId: initialValues.$id }
-        }, {
-            onSuccess: () => {
-                form.reset();
-            }
-        });
+        },);
     };
 
     const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
