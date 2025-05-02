@@ -7,7 +7,7 @@ interface useGetProjectProps {
     projectId: string;
 }
 
-export const useGetProjects = ({ projectId }: useGetProjectProps) => {
+export const useGetProject = ({ projectId }: useGetProjectProps) => {
     const query = useQuery({
         queryKey: ["project", projectId],
         queryFn: async () => {

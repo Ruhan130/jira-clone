@@ -207,7 +207,7 @@ const app = new Hono()
             const databases = c.get("databases");
             const user = c.get("user");
 
-            const project = await databases.getDocument(
+            const project = await databases.getDocument<Project>(
                 DATABASE_ID,
                 PROJECTS_ID,
                 projectId
