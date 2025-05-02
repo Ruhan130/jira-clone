@@ -105,27 +105,28 @@ export const DataFilter = ({ hideProjectFilter }: DataFilterProps) => {
                 </SelectContent>
             </Select>
 
-
             {/* THIS IS FOR PROJECT */}
-            <Select defaultValue={projectId ?? undefined} onValueChange={(value) => onProjectChange(value)}  >
-                <SelectTrigger className="w-full lg:w-auto h-8">
-                    <FolderIcon className="size-8 pr-2" />
-                    <SelectValue placeholder="All Projects" />
-                </SelectTrigger>
-                <SelectContent>
+            {!hideProjectFilter && (
+                < Select defaultValue={projectId ?? undefined} onValueChange={(value) => onProjectChange(value)}  >
+                    <SelectTrigger className="w-full lg:w-auto h-8">
+                        <FolderIcon className="size-8 pr-2" />
+                        <SelectValue placeholder="All Projects" />
+                    </SelectTrigger>
+                    <SelectContent>
 
-                    <SelectItem value="all" >All Projects</SelectItem>
-                    <SelectSeparator />
-                    {
-                        optionProjects?.map(((project) => (
-                            <SelectItem key={project.value} value={project.value}>
-                                {project.label}
-                            </SelectItem>
-                        )))
-                    }
+                        <SelectItem value="all" >All Projects</SelectItem>
+                        <SelectSeparator />
+                        {
+                            optionProjects?.map(((project) => (
+                                <SelectItem key={project.value} value={project.value}>
+                                    {project.label}
+                                </SelectItem>
+                            )))
+                        }
 
-                </SelectContent>
-            </Select>
+                    </SelectContent>
+                </Select>
+            )}
             <DatePicker
                 placeholder="Due Date"
                 className="w-full lg:w-auto h-8"
@@ -134,7 +135,7 @@ export const DataFilter = ({ hideProjectFilter }: DataFilterProps) => {
                     setFilters({ dueDate: date ? date.toISOString() : null })
                 }}
             />
-        </div>
+        </div >
     )
 
 }
