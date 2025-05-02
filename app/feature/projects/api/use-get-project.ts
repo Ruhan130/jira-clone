@@ -17,7 +17,7 @@ export const useGetProject = ({ projectId }: useGetProjectProps) => {
                 }
             );
             if (!response.ok) {
-                throw new Error("Failed to fetch workspace");
+                throw new Error("Failed to fetch project");
 
             }
 
