@@ -1,6 +1,7 @@
-"use client"; 
+"use client";
 
 import { useGetProject } from "@/app/feature/projects/api/use-get-project";
+import { useGetProjectAnalytics } from "@/app/feature/projects/api/use-get-project-analytics";
 import { ProjectAvatar } from "@/app/feature/projects/component/create-project-avatar";
 import { useProjectId } from "@/app/feature/projects/hooks/use-project-id";
 import { TaskViewSwitcher } from "@/app/feature/tasks/components/task-view-switcher";
@@ -13,11 +14,12 @@ import Link from "next/link";
 
 export const ProjectIdClient = () => {
     const projectId = useProjectId();
-    const { data: project, isLoading } = useGetProject({ projectId });
+    const { data: project, isLoading: isLoadingProject } = useGetProject({ projectId });
 
 
-    // const { data: analytics, isLoading: isLoadingProjectAnalytics } = useGetProjectAnalytics({ projectId });
+    const { data: analytics, isLoading: isLoadingProjectAnalytics } = useGetProjectAnalytics({ projectId });
 
+    const isLoading = isLoadingProject || isLoadingProjectAnalytics
     if (isLoading) {
         return <PageLoader />
     }
