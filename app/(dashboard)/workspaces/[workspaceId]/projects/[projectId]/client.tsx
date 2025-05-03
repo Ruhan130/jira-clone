@@ -5,6 +5,7 @@ import { useGetProjectAnalytics } from "@/app/feature/projects/api/use-get-proje
 import { ProjectAvatar } from "@/app/feature/projects/component/create-project-avatar";
 import { useProjectId } from "@/app/feature/projects/hooks/use-project-id";
 import { TaskViewSwitcher } from "@/app/feature/tasks/components/task-view-switcher";
+import { Analytics } from "@/components/analytics";
 import { PageError } from "@/components/page-error";
 import { PageLoader } from "@/components/page-loader";
 import { Button } from "@/components/ui/button";
@@ -47,6 +48,9 @@ export const ProjectIdClient = () => {
                     </Button>
                 </div>
             </div>
+            {analytics ? (
+                <Analytics data={analytics} />
+            ) : null}
             <TaskViewSwitcher hideProjectFilter />
         </div>
     )
