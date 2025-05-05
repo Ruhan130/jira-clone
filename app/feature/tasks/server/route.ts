@@ -9,8 +9,7 @@ import { ID, Query } from "node-appwrite";
 import { Task, TaskType } from "../types";
 import { createAdminClient } from "@/lib/appwrite";
 import { Project } from "../../projects/types";
-import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 
 const app = new Hono()
     .delete(

@@ -11,7 +11,7 @@ export type projectAnalyticsResponseType = InferResponseType<typeof client.api.w
 
 export const useGetWorkspaceAnalytics = ({ workspaceId }: useGetProjectAnalyticsProps) => {
     const query = useQuery({
-        queryKey: ["project-analytics", workspaceId],
+        queryKey: ["workspace-analytics", workspaceId],
         queryFn: async () => {
             const response = await client.api.workspaces[":workspaceId"]["analytics"].$get(
                 {
