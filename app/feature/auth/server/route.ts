@@ -1,4 +1,4 @@
-import z from "zod"
+
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { loginSchema, registerSchema } from "../schemas";
@@ -72,9 +72,8 @@ const app = new Hono()
         });
 
         return c.json({ data: user });
-    })
+    });
 
 
-    ;
 
 export default app;
