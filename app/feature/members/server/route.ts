@@ -9,7 +9,7 @@ import { getMember } from "../utils"
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config"
 import { Query } from "node-appwrite"
 // import { json } from "stream/consumers"
-import { MemberType } from "../type"
+import { Member, MemberType } from "../type"
 const app = new Hono()
     .get("/",
         sessionMiddleware,
@@ -31,7 +31,7 @@ const app = new Hono()
                 return c.json({ error: "Unothorized" }, 401);
             }
 
-            const memebers = await databases.listDocuments(
+            const memebers = await databases.listDocuments<Member>(
                 DATABASE_ID,
                 MEMBERS_ID,
                 [Query.equal("workspaceId", workspaceId)]
