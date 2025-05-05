@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectTrigger, SelectItem, SelectValue, SelectSeparator }
     from "@/components/ui/select";
-import { useGetMember } from "../../members/api/use-get-members";
+import { useGetMembers } from "../../members/api/use-get-members";
 import { useGetProjects } from "../../projects/api/use-get-projects";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 import { FolderIcon, ListCheckIcon, UserIcon } from "lucide-react";
@@ -18,7 +18,7 @@ interface DataFilterProps {
 export const DataFilter = ({ hideProjectFilter }: DataFilterProps) => {
     const workspaceId = UseWorkspaceId();
     const { data: projects, isLoading: isLoadingProjects } = useGetProjects({ workspaceId });
-    const { data: members, isLoading: isLoadingMembers } = useGetMember({ workspaceId });
+    const { data: members, isLoading: isLoadingMembers } = useGetMembers({ workspaceId });
 
 
     const isLoading = isLoadingProjects || isLoadingMembers;

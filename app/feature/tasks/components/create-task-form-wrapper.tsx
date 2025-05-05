@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { useGetMember } from "../../members/api/use-get-members";
+import { useGetMembers } from "../../members/api/use-get-members";
 import { useGetProjects } from "../../projects/api/use-get-projects";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 import { Loader } from "lucide-react";
@@ -11,7 +11,7 @@ interface CreateTaskWrapperProps {
 
 export const CreateTaskFormWRapper = ({ onCanel }: CreateTaskWrapperProps) => {
     const workspaceId = UseWorkspaceId();
-    const { data: members, isLoading: isLoadingMembers } = useGetMember({ workspaceId });
+    const { data: members, isLoading: isLoadingMembers } = useGetMembers({ workspaceId });
     const { data: projects, isLoading: isLoadingProjects } = useGetProjects({ workspaceId });
     
 

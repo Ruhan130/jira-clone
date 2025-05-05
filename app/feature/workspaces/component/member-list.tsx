@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-react";
 import Link from "next/link";
 import { DottedSeperator } from "@/components/dotted-seperater.tsx/dotted-seperater";
-import { useGetMember } from "@/app/feature/members/api/use-get-members";
+import { useGetMembers } from "@/app/feature/members/api/use-get-members";
 import { Fragment } from "react";
 import { MemberAvatar } from "../../members/component/member-avatar";
 import { Separator } from "@/components/ui/separator";
@@ -24,7 +24,7 @@ const MemberList = () => {
         "destructive"
     )
 
-    const { data } = useGetMember({ workspaceId });
+    const { data } = useGetMembers({ workspaceId });
 
     const {
         mutate: deleteMember,
