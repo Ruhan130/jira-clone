@@ -9,7 +9,7 @@ interface useGetProjectAnalyticsProps {
 
 export type projectAnalyticsResponseType = InferResponseType<typeof client.api.workspaces[":workspaceId"]["analytics"]["$get"], 200>;
 
-export const useGetProjectAnalytics = ({ workspaceId }: useGetProjectAnalyticsProps) => {
+export const useGetWorkspaceAnalytics = ({ workspaceId }: useGetProjectAnalyticsProps) => {
     const query = useQuery({
         queryKey: ["project-analytics", workspaceId],
         queryFn: async () => {
