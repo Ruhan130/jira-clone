@@ -1,6 +1,4 @@
-import { cookies } from "next/headers";
-import { Account, Client } from "node-appwrite"
-import { AUTH_CONST } from "./constant";
+
 import { createSessionClient } from "@/lib/appwrite";
 
 export const getCurrent = async () => {
