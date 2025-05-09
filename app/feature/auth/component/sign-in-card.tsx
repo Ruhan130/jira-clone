@@ -12,7 +12,7 @@ import Link from "next/link";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
-import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
+import { signUpWithGithub, signUpWithGoogle, signUpWithMicrosoft } from "@/lib/oauth";
 
 export const SignInCard = () => {
     const { mutate, isPending } = useLogin();
@@ -98,6 +98,16 @@ export const SignInCard = () => {
                     variant="secondary">
                     <FaGithub className="mr-5 size-10" />
                     Login with GitHub
+                </Button>
+
+                <Button
+                    onClick={() => signUpWithMicrosoft()}
+                    disabled={isPending}
+                    size="lg"
+                    className="w-full"
+                    variant="teritery">
+                    <FaGithub className="mr-5 size-10" />
+                    Login with Microsoft
                 </Button>
             </CardContent>
 

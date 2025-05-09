@@ -34,3 +34,17 @@ export async function signUpWithGoogle() {
 
 	return redirect(redirectUrl);
 };
+
+export async function signUpWithMicrosoft() {
+	const { account } = await createAdminClient();
+
+	const origin = headers().get("origin");
+
+	const redirectUrl = await account.createOAuth2Token(
+		OAuthProvider.Microsoft,
+		`${origin}/oauth`,
+		`${origin}/`,
+	);
+
+	return redirect(redirectUrl);
+};
