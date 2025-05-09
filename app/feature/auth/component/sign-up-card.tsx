@@ -30,7 +30,20 @@ export const SignUpCard = () => {
         }
     });
 
-    const onSubmit = (values: z.infer<typeof registerSchema>) => { mutate({ json: values })};
+    const { isValid } = form.formState;
+
+
+    const onSubmit = (values: z.infer<typeof registerSchema>) => {
+        const result = registerSchema.safeParse(values);
+
+        if (!result.success) {
+            // Show errors manually if needed (optional)
+            return; // 🛑 Stop API call
+        }
+        mutate({
+            json: values
+        })
+    };
     return (
         <Card className="w-full h-full md:w-[487px] border-none shadow-none">
             <CardHeader className="flex items-center justify-center text-center p-7">
@@ -91,9 +104,15 @@ export const SignUpCard = () => {
                         )}
                         />
 
-                        <Button className="w-full" variant="primary" disabled={isPending} >
+                        <Button
+                            className="w-full"
+                            variant="primary"
+                            type="submit"
+                            disabled={isPending}
+                        >
                             Sign Up
                         </Button>
+
                     </form>
                 </Form>
             </CardContent>

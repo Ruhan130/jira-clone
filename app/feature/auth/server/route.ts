@@ -51,7 +51,7 @@ const app = new Hono()
         const { name, email, password } = c.req.valid("json");
 
         const { account } = await createAdminClient();
-        const user = account.create(
+        const user = await account.create(
             ID.unique(),
             email,
             password,
@@ -63,11 +63,11 @@ const app = new Hono()
         );
 
         setCookie(
-            c, AUTH_CONST, session.secret, {
+            c, AUTH_CONST, session.secret, {    
             path: "/",
             httpOnly: true,
             secure: true,
-            sameSite: "Strict",
+            sameSite: "Lax",
             maxAge: 60 * 60 * 24 * 30
         });
 
