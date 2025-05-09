@@ -1,7 +1,7 @@
 // src/lib/server/oauth.js
 "use server";
 
-import { createAdminClient } from "@/lib/appwrite";
+import { createAdimnClientForMicrosoft, createAdminClient } from "@/lib/appwrite";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { OAuthProvider } from "node-appwrite";
@@ -36,14 +36,14 @@ export async function signUpWithGoogle() {
 };
 
 export async function signUpWithMicrosoft() {
-	const { account } = await createAdminClient();
+	const { account } = await createAdimnClientForMicrosoft();
 
 	const origin = headers().get("origin");
 
 	const redirectUrl = await account.createOAuth2Token(
 		OAuthProvider.Microsoft,
 		`${origin}/oauth`,
-		`${origin}/`,
+		`${origin}/sign-up`,
 	);
 
 	return redirect(redirectUrl);

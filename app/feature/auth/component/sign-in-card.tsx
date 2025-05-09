@@ -12,7 +12,7 @@ import Link from "next/link";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
-import { signUpWithGithub, signUpWithGoogle, signUpWithMicrosoft } from "@/lib/oauth";
+import { signUpWithGithub, signUpWithGoogle, signUpWithMicrosoft } from "@/lib/oAuth";
 
 export const SignInCard = () => {
     const { mutate, isPending } = useLogin();
