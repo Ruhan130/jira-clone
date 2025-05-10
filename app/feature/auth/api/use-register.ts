@@ -5,6 +5,10 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 
+type RegisterResponse =
+    | { data: any }
+    | { error: string };
+
 
 type ResponseType = InferResponseType<typeof client.api.auth.register["$post"]>;
 type RequestType = InferRequestType<typeof client.api.auth.register["$post"]>;
@@ -16,19 +20,20 @@ export const useRegister = () => {
         {
             mutationFn: async ({ json }) => {
                 const response = await client.api.auth.register["$post"]({ json });
-                if(!response){
-                    throw new Error("Failed to register ");
+                const data: RegisterResponse = await response.json();
+                if (!response.ok && "error" in data) {
+                    throw new Error(data.error || "Registration failed");
                 }
-                
-                return await response.json();
+
+                return data;
             },
             onSuccess: () => {
                 toast.success("Registered");
                 router.refresh();
                 queryClient.invalidateQueries({ queryKey: ["current"] });
             },
-            onError: () => {
-                toast.error("Failed to register");
+            onError: (error: Error) => {
+                toast.error(error.message);
             }
         }
     );

@@ -9,7 +9,7 @@ import { useLogout } from "../api/use-logout";
 
 export const UserButton = () => {
     const { data: user, isLoading } = useCurrent();
-    const { mutate : logout } = useLogout();
+    const { mutate: logout } = useLogout();
 
     if (isLoading) {
         return (
@@ -35,7 +35,11 @@ export const UserButton = () => {
                     </AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger >
-            <DropdownMenuContent align="end" side="bottom" className="w-60 border border-r-neutral-200 rounded-lg shadow-2xl " sideOffset={10} >
+            <DropdownMenuContent
+                align="end"
+                side="bottom"
+                className="w-60 border border-r-neutral-200 rounded-lg shadow-2xl z-50"
+                sideOffset={10} >
                 <div className="flex flex-col items-center justify-center px-2.5 gap-2 py-4 " >
                     <Avatar className="size-10 hover:opacity-75  rounded-full flex items-center justify-center bg-neutral-200 border border-neutral-300">
                         <AvatarFallback className="bg-neutral-200 font-medium text-neutral-500 flex items-center justify-center">
@@ -49,9 +53,9 @@ export const UserButton = () => {
                         </p>
                     </div>
                 </div>
-                <DottedSeperator className="mb-1"/>
-                <DropdownMenuItem className="flex justify-center items-center font-medium text-amber-700 h-10 cursor-pointer" onClick={()=> logout()}>
-                    <LogOut className="mr-2 size-4"/>Logout
+                <DottedSeperator className="mb-1" />
+                <DropdownMenuItem className="flex justify-center items-center font-medium text-amber-700 h-10 cursor-pointer" onClick={() => logout()}>
+                    <LogOut className="mr-2 size-4" />Logout
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

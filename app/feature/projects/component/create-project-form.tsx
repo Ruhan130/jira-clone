@@ -175,7 +175,7 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectForm) => {
                                     Cancel
                                 </Button>
                                 <Button type="submit" variant="primary" size="lg"   >
-                                    Project Workspace
+                                    Create Project 
                                 </Button>
                             </div>
                         </form>
