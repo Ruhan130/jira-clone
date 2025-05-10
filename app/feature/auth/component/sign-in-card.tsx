@@ -109,6 +109,11 @@ export const SignInCard = () => {
                     <FaGithub className="mr-5 size-10" />
                     Login with Microsoft
                 </Button>
+                <div className="flex justify-end">
+                    <Link href="/forget-password" className="text-blue-600 text-base underline font-normal">
+                        Forget-Password?
+                    </Link>
+                </div>
             </CardContent>
 
             <div className="p-7">
