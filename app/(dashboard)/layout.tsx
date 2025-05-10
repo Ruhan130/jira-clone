@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     return (
         <div className="min-h-screen">
             <CreateResponsiveModal />
-            <CreateProjectModal />
+            <CreateProjectModal />          
             <CreateTaskModal />
             <EditTaskModel />
 

@@ -92,7 +92,7 @@ export const DataFilter = ({ hideProjectFilter }: DataFilterProps) => {
                 </SelectTrigger>
                 <SelectContent>
 
-                    <SelectItem value="all" >All assignees</SelectItem>
+                    <SelectItem value="all" >All Assignees</SelectItem>
                     <SelectSeparator />
                     {
                         optionsMember?.map(((member) => (

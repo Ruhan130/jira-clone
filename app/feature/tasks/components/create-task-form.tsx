@@ -179,7 +179,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>
-                                                Task ID
+                                                Project
                                             </FormLabel>
                                             <Select defaultValue={field.value}
                                                 onValueChange={field.onChange} >

@@ -48,32 +48,50 @@ const app = new Hono()
 
 
     .post("/register", zValidator("json", registerSchema), async (c) => {
+        const isLocal = process.env.IS_LOCAL === 'true';
         const { name, email, password } = c.req.valid("json");
 
-        const { account } = await createAdminClient();
-        const user = account.create(
-            ID.unique(),
-            email,
-            password,
-            name
-        );
-        const session = await account.createEmailPasswordSession(
-            email,
-            password
-        );
+        try {
+            const { account } = await createAdminClient();
+            const user = await account.create(
+                ID.unique(),
+                email,
+                password,
+                name
+            );
 
-        setCookie(
-            c, AUTH_CONST, session.secret, {
-            path: "/",
-            httpOnly: true,
-            secure: true,
-            sameSite: "Strict",
-            maxAge: 60 * 60 * 24 * 30
-        });
+            const session = await account.createEmailPasswordSession(
+                email,
+                password
+            );
 
-        return c.json({ data: user });
+            setCookie(
+                c, AUTH_CONST, session.secret, {
+                path: "/",
+                httpOnly: true,
+                secure: !isLocal,
+                sameSite: "Lax",
+                maxAge: 60 * 60 * 24 * 30
+            }
+            );
+
+            return c.json({ data: user });
+
+        } catch (error: any) {
+            // Appwrite specific error code for duplicate email is 409
+            if (error.code === 409) {
+                return c.json(
+                    { error: "Email is already registered" },
+                    400
+                );
+            }
+
+            return c.json(
+                { error: "Something went wrong" },
+                500
+            );
+        }
     });
-
 
 
 export default app;

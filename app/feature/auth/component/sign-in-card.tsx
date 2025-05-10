@@ -5,13 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { TypeOf, z } from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
+import { signUpWithGithub, signUpWithGoogle, signUpWithMicrosoft } from "@/lib/oAuth";
 
 export const SignInCard = () => {
     const { mutate, isPending } = useLogin();
@@ -80,6 +81,7 @@ export const SignInCard = () => {
             </div>
             <CardContent className="p-7 flex flex-col gap-y-4">
                 <Button
+                    onClick={() => signUpWithGoogle()}
                     disabled={isPending}
                     size="lg"
                     className="w-full"
@@ -89,12 +91,23 @@ export const SignInCard = () => {
                 </Button>
 
                 <Button
+                    onClick={() => signUpWithGithub()}
                     disabled={isPending}
                     size="lg"
                     className="w-full"
                     variant="secondary">
                     <FaGithub className="mr-5 size-10" />
                     Login with GitHub
+                </Button>
+
+                <Button
+                    onClick={() => signUpWithMicrosoft()}
+                    disabled={isPending}
+                    size="lg"
+                    className="w-full"
+                    variant="teritery">
+                    <FaGithub className="mr-5 size-10" />
+                    Login with Microsoft
                 </Button>
             </CardContent>
 

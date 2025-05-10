@@ -26,17 +26,17 @@ export const NavBar = () => {
 
     const { title, description } = pathnameMap[pathnameKey] || defaultMap;
     return (
-        <div className="pt-4 px-6 flex items-center justify-between">
+        <nav className="pt-4 px-6 flex items-center justify-between">
             <div className="flex-col hidden lg:flex">
                 <h1 className="text-2xl font-semibold">
                     {title}
                 </h1>
                 <p className="text-muted-foreground and tasks here">
-                    {description}
+                    {description}   
                 </p>
             </div>
             <ModleSidebar />
             <UserButton />
-        </div>
+        </nav>
     )
 }

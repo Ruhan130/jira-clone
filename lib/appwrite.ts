@@ -47,3 +47,21 @@ export async function createAdminClient() {
 
 
 };
+
+export async function createAdimnClientForMicrosoft() {
+    const client = new Client()
+        .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT_MICROSOFT!)
+        .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
+        .setKey(process.env.NEXT_APPWRITE_KEY!)
+
+    return {
+        get account() {
+            return new Account(client);
+        },
+        get users() {
+            return new Users(client);
+        }
+    };
+
+
+};
