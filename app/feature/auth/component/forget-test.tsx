@@ -20,7 +20,7 @@ export const ForgetTesting = () => {
         <Card className="w-full h-full md:w-[487px] border-none shadow-none">
             <CardHeader className="flex items-center justify-center text-center p-7">
                 <CardTitle className="text-2xl ">
-                    Forget Password
+                    Forgot Password
                 </CardTitle>
                 <CardDescription>
                     <span className="text-sm text-gray-500">
@@ -55,7 +55,7 @@ export const ForgetTesting = () => {
                             type="submit"
                         // disabled={isPending}
                         >
-                            Forget Password
+                            Forgot Password
                         </Button>
                     </form>
                 </Form>
