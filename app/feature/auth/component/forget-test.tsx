@@ -8,8 +8,10 @@ import { Input } from "@/components/ui/input";
 import { forgotPasswordSchema } from "../schemas";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForgotPassword } from "../api/use-forget-password";
 
 export const ForgetTesting = () => {
+    const forgetPassword = useForgotPassword();
     const form = useForm<z.infer<typeof forgotPasswordSchema>>({
         resolver: zodResolver(forgotPasswordSchema),
         defaultValues: {
@@ -34,7 +36,9 @@ export const ForgetTesting = () => {
             <CardContent className="p-7">
                 <Form {...form}>
                     <form
-                        onSubmit={() => { }} className="space-y-4">
+                        onSubmit={form.handleSubmit((data) => {
+                            forgetPassword.mutate({ json: data });
+                        })} className="space-y-4">
                         <FormField control={form.control} name="email" render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -53,7 +57,7 @@ export const ForgetTesting = () => {
                             className="w-full"
                             variant="primary"
                             type="submit"
-                        // disabled={isPending}
+                            disabled={forgetPassword.isPending}
                         >
                             Forgot Password
                         </Button>

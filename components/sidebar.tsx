@@ -10,7 +10,7 @@ export const Sidebar = () => {
         <aside className="h-full bg-neutral-100 p-4 w-full">
             <div className="flex justify-center">
                 <Link href="">
-                    <Image src="/ec_logo.png" alt="logo" width={70} height={20} />
+                    <Image src="/Myra_Logo.png" alt="logo" width={70} height={20} />
                 </Link>
             </div>
             <DottedSeperator className="my-4" />

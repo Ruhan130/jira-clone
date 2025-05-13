@@ -7,6 +7,7 @@ import { ID } from "node-appwrite";
 import { deleteCookie, setCookie } from "hono/cookie";
 import { AUTH_CONST } from "../constant";
 import { sessionMiddleware } from "@/lib/session-middleware";
+import { ForgotPass } from "../types";
 
 const app = new Hono()
     .get(
@@ -97,7 +98,7 @@ const app = new Hono()
 
         try {
             const { account } = await createAdminClient();
-            const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset-password`;
+            const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password`;
             await account.createRecovery(email, resetUrl);
 
             return c.json({ message: "Reset link sent to your email" });
@@ -120,6 +121,7 @@ const app = new Hono()
             return c.json({ error: "Invalid or expired recovery link" }, 400);
         }
     });
+
 
 
 
