@@ -18,22 +18,24 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { createProjectFormSchema, createProjectSchema } from "../schemas";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
+import { useRouter } from "next/navigation";
 interface CreateProjectForm {
     onCancel?: () => void;
 };
 
 export const CreateProjectForm = ({ onCancel }: CreateProjectForm) => {
     const workspaceId = UseWorkspaceId();
+    const router = useRouter();
     // const router = useRouter();
     const { mutate, isPending } = useCreateProject();
-   
+
     const form = useForm<z.infer<typeof createProjectFormSchema>>({
         resolver: zodResolver(createProjectFormSchema),
         defaultValues: {
             name: "",
         }
     });
-    
+
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -43,14 +45,15 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectForm) => {
             workspaceId, // manually add workspaceId here
             image: values.image instanceof File ? values.image : "",
         }
-    
+
         mutate({ form: finalSubmit }, {
-            onSuccess: () => {
+            onSuccess: ({ data }) => {
                 form.reset();
+                router.push(`/workspaces/${workspaceId}/projects/${data.$id}`);
             }
         });
     };
-    
+
 
     const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -175,7 +178,7 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectForm) => {
                                     Cancel
                                 </Button>
                                 <Button type="submit" variant="primary" size="lg"   >
-                                    Create Project 
+                                    Create Project
                                 </Button>
                             </div>
                         </form>

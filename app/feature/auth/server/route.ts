@@ -1,7 +1,7 @@
 
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { loginSchema, registerSchema } from "../schemas";
+import { forgotPasswordSchema, loginSchema, registerSchema, resetPasswordSchema } from "../schemas";
 import { createAdminClient } from "@/lib/appwrite";
 import { ID } from "node-appwrite";
 import { deleteCookie, setCookie } from "hono/cookie";
@@ -91,7 +91,36 @@ const app = new Hono()
                 500
             );
         }
+    }
+    ).post("/forgot-password", zValidator("json", forgotPasswordSchema), async (c) => {
+        const { email } = c.req.valid("json");
+
+        try {
+            const { account } = await createAdminClient();
+            const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset-password`;
+            await account.createRecovery(email, resetUrl);
+
+            return c.json({ message: "Reset link sent to your email" });
+        } catch (error: any) {
+            if (error.code === 404) {
+                return c.json({ error: "Email not found" }, 400);
+            }
+            return c.json({ error: "Failed to send reset link" }, 500);
+        }
+    }
+    )
+    .post("/reset-password", zValidator("json", resetPasswordSchema), async (c) => {
+        const { userId, secret, password } = c.req.valid("json");
+
+        try {
+            const { account } = await createAdminClient();
+            await account.updateRecovery(userId, secret, password);
+            return c.json({ message: "Password reset successful" });
+        } catch (error: any) {
+            return c.json({ error: "Invalid or expired recovery link" }, 400);
+        }
     });
+
 
 
 export default app;
