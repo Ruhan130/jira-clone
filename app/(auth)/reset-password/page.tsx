@@ -1,15 +1,16 @@
+
+import { ResetPasswordForm } from "@/app/feature/auth/component/reset-form";
 import { getCurrent } from "@/app/feature/auth/queries"
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 const ResetPassword = async () => {
     const account = await getCurrent();
-   if(account) redirect("/")
+  
+    if (account) redirect("/")
 
     return (
-        <div className="">
-            Forget Passowrd
-
-        </div>
+        <ResetPasswordForm userId="" secret="" />
     )
 }
 
