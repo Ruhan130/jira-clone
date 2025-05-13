@@ -111,7 +111,7 @@ export const SignInCard = () => {
                 </Button>
                 <div className="flex justify-end">
                     <Link href="/forget-password" className="text-blue-600 text-base underline font-normal">
-                        Forget-Password?
+                        Forgot-Password?
                     </Link>
                 </div>
             </CardContent>
