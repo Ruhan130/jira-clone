@@ -10,17 +10,13 @@ import tasks from "@/app/feature/tasks/server/router";
 
 // Initialize app
 const app = new Hono()
-  // 👇 Enable CORS
   .use('*', cors({
     origin: ['https://myra-one.vercel.app'],
     allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   }))
-  .basePath("/api");
-
-// Routes
-const routes = app
+  .basePath("/api")
   .route("/auth", auth)
   .route("/members", members)
   .route("/workspaces", workspaces)
@@ -34,7 +30,4 @@ export const PATCH = handle(app);
 export const DELETE = handle(app);
 
 // Type
-export type Apptype = typeof routes;
-
-
-
+export type Apptype = typeof app;
