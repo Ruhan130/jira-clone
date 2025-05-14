@@ -19,7 +19,7 @@ export const useDeleteMembers = () => {
                 }
                 return await response.json();
             },
-            onSuccess: ({ data }) => {
+            onSuccess: () => {
                 toast.success("Workspace deleted");
                 queryClient.invalidateQueries({ queryKey: ["members"] });
                 // queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });

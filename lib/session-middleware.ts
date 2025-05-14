@@ -6,8 +6,8 @@ import {
     Models,
     Storage,
     type Account as AccountType,
-    type Databases as DatabasesTypem,
-    type Storage as StorageType,
+    // type Databases as DatabasesTypem,
+    // type Storage as StorageType,
     type Users as UserType
 } from "node-appwrite"
 

@@ -2,7 +2,6 @@
 
 import { redirect } from "next/navigation";
 import { getCurrent } from "../feature/auth/queries";
-import { UserButton } from "../feature/auth/component/user-button";
 import { getWorkspaces } from "../feature/workspaces/queries";
 
 export default async function Home() {

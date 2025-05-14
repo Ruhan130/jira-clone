@@ -3,9 +3,7 @@ import { DottedSeperator } from "@/components/dotted-seperater.tsx/dotted-sepera
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Loader, PlusIcon } from "lucide-react"
-import { UseCreateProjectModal } from "../../projects/hooks/use-create-project-modal"
 import { UseCreateTaskModal } from "../hooks/use-create-task-modal";
-import { useCreateTask } from "../api/use-create-task";
 import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
 import { useGetTasks } from "../api/use-get-tasks";
 import { useQueryState } from "nuqs";
