@@ -11,7 +11,7 @@ import tasks from "@/app/feature/tasks/server/router";
 // Initialize app
 const app = new Hono()
     .use('*', cors({
-        origin: ['https://myra-5w8a2v6i5-ruhan130s-projects.vercel.app'],
+        origin: ['https://myra-git-jira-clone-resolving-build-issues-ruhan130s-projects.vercel.app'],
         allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
         allowHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
