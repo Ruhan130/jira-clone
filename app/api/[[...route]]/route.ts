@@ -10,18 +10,18 @@ import tasks from "@/app/feature/tasks/server/router";
 
 // Initialize app
 const app = new Hono()
-  .use('*', cors({
-    origin: ['https://myra-one.vercel.app'],
-    allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    allowHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-  }))
-  .basePath("/api")
-  .route("/auth", auth)
-  .route("/members", members)
-  .route("/workspaces", workspaces)
-  .route("/projects", projects)
-  .route("/tasks", tasks);
+    .use('*', cors({
+        origin: ['https://myra-5w8a2v6i5-ruhan130s-projects.vercel.app'],
+        allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
+        allowHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+    }))
+    .basePath("/api")
+    .route("/auth", auth)
+    .route("/members", members)
+    .route("/workspaces", workspaces)
+    .route("/projects", projects)
+    .route("/tasks", tasks);
 
 // HTTP handlers
 export const GET = handle(app);
