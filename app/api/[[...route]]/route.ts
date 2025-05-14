@@ -11,11 +11,12 @@ import tasks from "@/app/feature/tasks/server/router";
 // Initialize app
 const app = new Hono()
     .use('*', cors({
-        origin: ['https://myra-one.vercel.app'],
+        origin: [process.env.NEXT_PUBLIC_APP_URL!],
         allowMethods: ['GET', 'POST', 'PATCH', 'DELETE'],
         allowHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     }))
+    
     .basePath("/api")
     .route("/auth", auth)
     .route("/members", members)
