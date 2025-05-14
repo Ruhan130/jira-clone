@@ -3,10 +3,13 @@ import { InferRequestType, InferResponseType } from "hono";
 import { client } from "@/lib/rpc";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Models } from "node-appwrite";
 
+
+export type User = Models.User<object>;
 
 type RegisterResponse =
-    | { data: any }
+    | { data: User }
     | { error: string };
 
 

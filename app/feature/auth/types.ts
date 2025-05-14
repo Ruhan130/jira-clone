@@ -5,3 +5,5 @@ export type ForgotPass = Models.Document & {
     confPassword: string;
     // workspaceId: string;
 };
+
+

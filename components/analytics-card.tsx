@@ -1,5 +1,5 @@
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { cn } from "@/lib/utils";
 
 interface AnalyticsCardProps {
@@ -12,7 +12,7 @@ interface AnalyticsCardProps {
 export const AnalyticsCard = ({ title, value, varient, increaseValue }: AnalyticsCardProps) => {
 
     const iconColor = varient === "up" ? "text-emerald-500" : "text-red-500";
-    const increaseValueColor = varient === "up" ? "text-emerald-500" : "text-red-500";
+    // const increaseValueColor = varient === "up" ? "text-emerald-500" : "text-red-500";
     const Icon = varient === "up" ? FaCaretUp : FaCaretDown;
     return (
         <Card className="border-none shadow-none w-full">

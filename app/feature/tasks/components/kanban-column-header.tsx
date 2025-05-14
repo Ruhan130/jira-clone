@@ -3,7 +3,6 @@ import { TaskType } from "../types";
 import React from "react";
 import { CircleCheckIcon, CircleDashedIcon, CircleDotDashedIcon, CircleDotIcon, CircleIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useCreateTask } from "../api/use-create-task";
 import { UseCreateTaskModal } from "../hooks/use-create-task-modal";
 
 interface KanbanColumnHeaderProps {

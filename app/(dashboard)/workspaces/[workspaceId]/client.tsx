@@ -20,7 +20,7 @@ import { PageLoader } from "@/components/page-loader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
-import { CalendarIcon, PencilIcon, PlusIcon, SettingsIcon } from "lucide-react";
+import { CalendarIcon, PlusIcon, SettingsIcon } from "lucide-react";
 import Link from "next/link";
 
 export const WorkspaceIdClient = () => {

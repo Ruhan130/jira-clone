@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
 import { Task } from "../types"
-import { PencilIcon } from "lucide-react"
 import { DottedSeperator } from "@/components/dotted-seperater.tsx/dotted-seperater"
 import { OverviewProperty } from "./overview-property"
 import { MemberAvatar } from "../../members/component/member-avatar"

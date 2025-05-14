@@ -38,7 +38,7 @@ export const DataFilter = ({ hideProjectFilter }: DataFilterProps) => {
         status,
         assigneeId,
         dueDate,
-        search }, setFilters] = useTaskFilter();
+    }, setFilters] = useTaskFilter();
 
     const onStatusChange = (value: string) => {
         setFilters({ status: value === "all" ? null : value as TaskType });

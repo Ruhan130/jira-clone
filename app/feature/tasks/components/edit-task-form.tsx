@@ -8,8 +8,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { createTaskSchemaWithId, createTaskSchenma } from "../schemas";
-import { UseWorkspaceId } from "../../workspaces/hooks/use-workspace-id";
+import { createTaskSchemaWithId } from "../schemas";
 import { DatePicker } from "@/components/date-picker";
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select";
 

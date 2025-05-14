@@ -1,4 +1,3 @@
-import { Divide } from "lucide-react";
 import { UserButton } from "../feature/auth/component/user-button";
 import Link from "next/link";
 import Image from "next/image";

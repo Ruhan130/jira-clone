@@ -7,7 +7,6 @@ import { ID } from "node-appwrite";
 import { deleteCookie, setCookie } from "hono/cookie";
 import { AUTH_CONST } from "../constant";
 import { sessionMiddleware } from "@/lib/session-middleware";
-import { ForgotPass } from "../types";
 
 const app = new Hono()
     .get(
@@ -78,19 +77,17 @@ const app = new Hono()
 
             return c.json({ data: user });
 
-        } catch (error: any) {
-            // Appwrite specific error code for duplicate email is 409
-            if (error.code === 409) {
-                return c.json(
-                    { error: "Email is already registered" },
-                    400
-                );
+        } catch (error: unknown) {
+            if (
+                typeof error === "object" &&
+                error !== null &&
+                "code" in error &&
+                (error as { code?: number }).code === 409
+            ) {
+                return c.json({ error: "Email is already registered" }, 400);
             }
 
-            return c.json(
-                { error: "Something went wrong" },
-                500
-            );
+            return c.json({ error: "Something went wrong" }, 500);
         }
     }
     ).post("/forgot-password", zValidator("json", forgotPasswordSchema), async (c) => {
@@ -102,10 +99,16 @@ const app = new Hono()
             await account.createRecovery(email, resetUrl);
 
             return c.json({ message: "Reset link sent to your email" });
-        } catch (error: any) {
-            if (error.code === 404) {
+        } catch (error: unknown) {
+            if (
+                typeof error === "object" &&
+                error !== null &&
+                "code" in error &&
+                (error as { code?: number }).code === 404
+            ) {
                 return c.json({ error: "Email not found" }, 400);
             }
+
             return c.json({ error: "Failed to send reset link" }, 500);
         }
     }
@@ -117,7 +120,7 @@ const app = new Hono()
             const { account } = await createAdminClient();
             await account.updateRecovery(userId, secret, password);
             return c.json({ message: "Password reset successful" });
-        } catch (error: any) {
+        } catch {
             return c.json({ error: "Invalid or expired recovery link" }, 400);
         }
     });
