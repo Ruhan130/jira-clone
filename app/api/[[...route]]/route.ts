@@ -16,6 +16,7 @@ const app = new Hono()
         allowHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
     }))
+    
     .basePath("/api")
     .route("/auth", auth)
     .route("/members", members)
