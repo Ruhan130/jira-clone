@@ -11,7 +11,7 @@ interface MemberAvatarProps {
 export const MemberAvatar = ({ name, className, FallbackClassName }: MemberAvatarProps) => {
 
     return (
-        <Avatar className={cn("size-10 transition border border-neutral-300 rounded-full", className)}>
+        <Avatar className={cn("size-6 transition border border-neutral-300 rounded-full", className)}>
             <AvatarFallback className={cn("bg-neutral-200 font-medium text-neutral-500 flex items-center justify-center ", FallbackClassName)} >
                 {name.charAt(0).toUpperCase()}
             </AvatarFallback>

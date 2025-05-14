@@ -86,12 +86,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
             param: {
                 workspaceId: initialValues.$id,
             }
-        }, {
-            onSuccess: () => {
-                router.refresh();
-            }
-        }
-        )
+        });
 
 
     }
@@ -106,13 +101,7 @@ export const EditWorkSpaceForm = ({ onCancel, initialValues }: EditWorkSpaceForm
         mutate({
             form: finalSubmit,
             param: { workspaceId: initialValues.$id }
-        }, {
-            onSuccess: ({ data }) => {
-                form.reset();
-                // onCancel?.();
-                router.push(`/workspaces/${data.$id}`);
-            }
-        });
+        },);
     };
 
     const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
