@@ -21,14 +21,21 @@ export const DatePicker = ({ value, onChange, className, placeholder = "Select D
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant="outline"
-                    size="sm"
-                    className={cn("w-full justify-start text-left font-normal px-3", !value && "text-muted-foreground", className)}>
-                    <CalenderIcon
-                        className="h-4 w-4 mr-2" />
+                <div
+                    role="button"
+                    tabIndex={0}
+                    className={cn(
+                        "flex items-center gap-2 w-full px-3 py-2 border border-input rounded-md text-sm text-muted-foreground bg-background shadow-sm hover:bg-accent hover:text-accent-foreground transition",
+                        !value && "text-muted-foreground",
+                        className
+                    )}
+                >
+                    <CalenderIcon className="h-4 w-4" />
                     {value ? format(value, "PPP") : <span>{placeholder}</span>}
-                </Button>
+                </div>
             </PopoverTrigger>
+
+
 
             <PopoverContent className="w-auto p-0">
                 <Calendar
