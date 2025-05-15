@@ -86,7 +86,7 @@ export const CreateTaskForm = ({ onCancel, projectOptions, memberOptions }: Crea
                                                 Due Date
                                             </FormLabel>
                                             <FormControl>
-                                                <DatePicker {...field} />
+                                                <DatePicker {...field}   />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
