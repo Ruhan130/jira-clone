@@ -1,0 +1,67 @@
+// src/lib/server/oauth.js
+"use server";
+
+import { createAdimnClientForMicrosoft, createAdminClient } from "@/lib/appwrite";
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { OAuthProvider } from "node-appwrite";
+
+export async function signUpWithGithub() {
+	const { account } = await createAdminClient();
+
+	const origin = headers().get("origin");
+
+	const redirectUrl = await account.createOAuth2Token(
+		OAuthProvider.Github,
+		`${origin}/oauth`,
+		`${origin}/sign-up`,
+	);
+
+	return redirect(redirectUrl);
+};
+
+
+// export async function signUpWithGoogle() {
+// 	const { account } = await createAdminClient();
+
+// 	const origin = headers().get("origin");
+
+// 	const redirectUrl = await account.createOAuth2Token(
+// 		OAuthProvider.Google,
+// 		`${origin}/oauth`,
+// 		`${origin}/sign-up`,
+// 	);
+
+// 	return redirect(redirectUrl);
+// };
+
+export async function signInWithGoogle() {
+    const { account } = await createAdminClient();
+    const origin = headers().get("origin");
+
+    const redirectUrl = await account.createOAuth2Token(
+        OAuthProvider.Google,
+        `${origin}/oauth`,
+        `${origin}/sign-in`
+    );
+
+    const modifiedUrl = redirectUrl + '&prompt=select_account';
+    
+    return redirect(modifiedUrl);
+}
+
+
+export async function signUpWithMicrosoft() {
+    const { account } = await createAdimnClientForMicrosoft();
+    const origin = headers().get("origin");
+
+    const redirectUrl = await account.createOAuth2Token(
+        OAuthProvider.Microsoft,
+        `${origin}/oauth`,
+        `${origin}/sign-up`,
+    );
+
+    const modifiedUrl = redirectUrl + '&prompt=select_account';
+    
+    return redirect(modifiedUrl);
+}

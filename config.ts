@@ -1,0 +1,13 @@
+export const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
+export const USERS_ID = process.env.NEXT_PUBLIC_APPWRITE_USERS_ID!;
+export const WORKSPACES_ID = process.env.NEXT_PUBLIC_APPWRITE_WORKSPACES_ID!;
+export const IMAGE_BUCKET_ID = process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ID!;
+export const MEMBERS_ID = process.env.NEXT_PUBLIC_APPWRITE_MEMBERS_ID!;
+export const PROJECTS_ID = process.env.NEXT_PUBLIC_APPWRITE_PROJECTS_ID!;
+export const TASKS_ID = process.env.NEXT_PUBLIC_APPWRITE_TASKS_ID!;
+export const TEAMS_ID = process.env.NEXT_PUBLIC_APPWRITE_TEAMS_ID!;
+export const SPRINT_ID = process.env.NEXT_PUBLIC_APPWRITE_SPRINT_ID!;
+export const INVITATION_ID = process.env.NEXT_PUBLIC_APPWRITE_INVITATION_ID!;
+export const TOKENCODES_ID = process.env.NEXT_PUBLIC_TOKEN_CODE_ID!;
+export const SUBTASK_ID = process.env.NEXT_PUBLIC_SUBTASK_ID!;
+export const COMMENT_ID = process.env.NEXT_PUBLIC_COMMENT_ID!;
